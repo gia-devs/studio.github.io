@@ -1,0 +1,64 @@
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(/FONTS/Roboto_Serif/RobotoSerif-VariableFont_GRAD\,opsz\,wdth\,wght.ttf);
+}
+@font-face {
+    font-family: "Roboto";
+    src: url(/FONTS/Roboto/Roboto-VariableFont_wdth\,wght.ttf);
+}
+@font-face {
+    font-family: "Roboto Flex";
+    src: url(/FONTS/Roboto_Flex/RobotoFlex-VariableFont_GRAD\,XOPQ\,XTRA\,YOPQ\,YTAS\,YTDE\,YTFI\,YTLC\,YTUC\,opsz\,slnt\,wdth\,wght.ttf);
+}
+@font-face {
+    font-family: "Roboto Slab";
+    src: url(/FONTS/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf);
+}
+* {
+    padding: 0; margin: 0;
+    box-sizing: border-box;
+}
+#starfield {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #000;
+}
+body {
+    color: #A0A0A0;
+    background: #0A0A0A;
+    font-family: "Roboto Flex";
+}
+h2 {
+    background: linear-gradient(
+        110deg,
+        #333 0%,
+        #666 20%,
+        #999 40%,
+        #999 60%,
+        #666 80%,
+        #333 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-size: 0.8rem;
+    font-weight: 200;
+    letter-spacing: 0.4em;
+}
+a {
+    color: #A0A0A0;
+    text-decoration: none;
+}
+main {
+    width: 100%;
+    height: 100vh;
+    display: flex; gap: 1em;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
