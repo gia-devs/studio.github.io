@@ -1,0 +1,25 @@
+/* Carrusel optimizado para mostrar una ficha a la vez con la proporción exacta */
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.carousel {
+    width: 380px; /* Ancho aproximado ideal para capturas verticales */    /* Altura fija proporcional a la primera imagen */
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.carousel article {
+    width: 380px;
+    height: 540px;
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    overflow: hidden;
+}

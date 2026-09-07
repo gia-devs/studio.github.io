@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G'IA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles-fonts.css">
+    <link rel="stylesheet" href="STYLES/ejemplos.css">
+</head>
+<body>
+
+    <div class="top-bar">
+    <header>
+        <a class="brand" href="#inicio" aria-label="G'AI, ir al inicio">
+            <span>G'IA</span>
+        </a>
+
+        <div class="search-wrap">
+            <label class="sr-only" for="topic-search">Buscar tema</label>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m20 20-4.5-4.5m2.5-5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+            <input id="topic-search" type="search" placeholder="Buscar HTML, CSS o JavaScript" autocomplete="off">
+            <button class="clear-search" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
+            <div class="search-results" id="search-results" role="listbox" aria-label="Resultados de búsqueda" hidden></div>
+        </div>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
+            <span class="menu-label">MENÚ</span>
+            <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="sr-only">Abrir menú</span>
+        </button>
+
+        <!-- Desktop: nav en el top-bar. Mobile: se fija al viewport vía CSS -->
+        <nav class="main-nav" id="main-nav" aria-label="Categorías">
+            <div class="nav-panel-header">
+                <span>Categorías</span>
+                <button class="close-menu" type="button" aria-label="Cerrar menú" id="close-menu">×</button>
+            </div>
+
+            <ul class="nav-categories">
+                <li class="nav-category" data-category="html">
+                    <button type="button" class="category-btn" aria-expanded="false" aria-controls="submenu-html">
+                        <span>HTML</span>
+                        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <ul class="submenu" id="submenu-html" hidden>
+                        <li><a href="#" data-topic="form" data-cat="html">FORM</a></li>
+                        <li><a href="#" data-topic="input-label" data-cat="html">INPUT / LABEL</a></li>
+                        <li><a href="#" data-topic="select-option" data-cat="html">SELECT / OPCION</a></li>
+                        <li><a href="#" data-topic="textarea" data-cat="html">TEXTAREA</a></li>
+                        <li><a href="#" data-topic="button" data-cat="html">BUTTON</a></li>
+                        <li><a href="#" data-topic="form-elements" data-cat="html">FORM / ELEMENTS</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category" data-category="css">
+                    <button type="button" class="category-btn" aria-expanded="false" aria-controls="submenu-css">
+                        <span>CSS</span>
+                        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <ul class="submenu" id="submenu-css" hidden>
+                        <li><a href="#" data-topic="display-grid" data-cat="css">DISPLAY GRID</a></li>
+                        <li><a href="#" data-topic="grid-columns" data-cat="css">GRID COLUMNS</a></li>
+                        <li><a href="#" data-topic="grid-rows" data-cat="css">GRID ROWS</a></li>
+                        <li><a href="#" data-topic="grid-area" data-cat="css">GRID AREAS</a></li>
+                        <li><a href="#" data-topic="grid-items" data-cat="css">GRID ITEMS</a></li>
+                        <li><a href="#" data-topic="grid-projects" data-cat="css">grid-projects</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category" data-category="js">
+                    <button type="button" class="category-btn" aria-expanded="false" aria-controls="submenu-js">
+                        <span>JS</span>
+                        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <ul class="submenu" id="submenu-js" hidden>
+                        <li><a href="#" data-topic="script" data-cat="js">SCRIPT</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    </div>
+
+    <div class="nav-backdrop" id="nav-backdrop" hidden aria-hidden="true"></div>
+
+    <main id="inicio">
+        <section class="home" aria-live="polite">
+
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>G'AI · Referencia web esencial</span>
+        <span>HTML · CSS · JavaScript</span>
+    </footer>
+
+
+
+
+
+
+
+<template id="tpl-form">
+    <article>
+        <ul>
+            <li>SEMANTIC<br>ELEMENT</li>
+            <li>FORM<br>CONTAINER</li>
+            <li>DISPLAY<br>BLOCK</li>
+        </ul>
+
+        <div class="elemento">
+            <h4><code>&lt;<span class="tag">form</span>&gt;</code></h4>
+            <h2>FORM<span></span></h2>
+            <h4><code>&lt;<span class="tag">fieldset</span>&gt;<br>&lt;<span class="tag">legend</span>&gt;</code></h4>
+        </div>
+
+        <ul>
+            <li>HTML</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <article>
+        <ul>
+            <li>FORM</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Contenedor para recopilar y enviar datos.</h3>
+
+<p>
+            El elemento <code>&lt;<span class="tag">form</span>&gt;</code>
+            representa una sección que contiene controles interactivos
+            destinados a recopilar información del usuario y enviarla
+            para su procesamiento. Dentro de un formulario pueden utilizarse elementos como
+            <code>&lt;<span class="tag">label</span>&gt;</code>,
+            <code>&lt;<span class="tag">input</span>&gt;</code>,
+            <code>&lt;<span class="tag">textarea</span>&gt;</code>,
+            <code>&lt;<span class="tag">select</span>&gt;</code>,
+            <code>&lt;<span class="tag">option</span>&gt;</code> y
+            <code>&lt;<span class="tag">button</span>&gt;</code>.
+        </p>
+
+        <p>
+            Para organizar controles relacionados se pueden utilizar
+            <code>&lt;<span class="tag">fieldset</span>&gt;</code> y
+            <code>&lt;<span class="tag">legend</span>&gt;</code>.
+            <code>&lt;<span class="tag">fieldset</span>&gt;</code>
+            agrupa los controles y
+            <code>&lt;<span class="tag">legend</span>&gt;</code>
+            proporciona el título del grupo.
+        </p>
+
+        <p>
+            Atributos clave como <code><span class="attribute">action</span></code> definen la URL de destino del envío y <code><span class="attribute">method</span></code> especifica el protocolo HTTP (como GET o POST) para transmitir los datos de forma segura.
+        </p>
+    </article>
+
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+<code>
+                    &lt;<span class="tag">form</span> <span class="attribute">action</span>=<span class="value">"/enviar"</span> <span class="attribute">method</span>=<span class="value">"POST"</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">fieldset</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">legend</span>&gt;Information&lt;/<span class="tag">legend</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">label</span>
+                    <span class="attribute">for</span>=<span class="value">"email"</span>&gt;Email&lt;/<span class="tag">label</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">input</span>
+                    <span class="attribute">type</span>=<span class="value">"email"</span>
+                    <span class="attribute">id</span>=<span class="value">"email"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">name</span>=<span class="value">"email"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">placeholder</span>=<span class="value">"email@example.com"</span><span class="tag"></span>&gt;
+                    <br>&nbsp;&nbsp;&lt;/<span class="tag">fieldset</span>&gt;
+                    <br>&lt;/<span class="tag">form</span>&gt;
+                </code>
+            </div>
+        </div>
+
+<div class="ejemplo">
+            <form>
+
+                <fieldset>
+                <legend>INFORMATION</legend>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" autocomplete="email">
+                </div>
+                </fieldset>
+
+            </form>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>TAG</li>
+            <li><div class="attribute-li"></div>ATTRIBUTE</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-input-label">
+    <article>
+        <ul>
+            <li>FORM<br>CONTROL</li>
+            <li>VOID<br>ELEMENT</li>
+            <li>DISPLAY<br>INLINE-BLOCK</li>
+        </ul>
+
+        <div class="elemento">
+            <h4><code>&lt;<span class="tag">label</span>&gt;</code></h4>
+            <h2>LABEL<br>INPUT<span></span></h2>
+            <h4><code>&lt;<span class="tag">input</span>&gt;</code></h4>
+        </div>
+
+        <ul>
+            <li>HTML</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <article>
+        <ul>
+            <li>LABEL / INPUT</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Control para introducir datos.</h3>
+
+        <p>
+            El elemento <code>&lt;<span class="tag">input</span>&gt;</code> es un elemento de autocierre que permite al usuario introducir o seleccionar datos en un formulario.
+            Su comportamiento y aspecto cambian según el atributo <code><span class="attribute">type</span></code>, que define la naturaleza del control, a continuación los mas usados:
+        </p>
+
+        <p>
+            <code><span class="attribute">type</span>=<span class="value">"text | password | email | number | search | url | tel |
+                checkbox | radio | file | color | range | date | time | submit | reset | button | image"</span></code>
+        </p>
+
+        <p>
+            El atributo <code><span class="attribute">id</span></code> identifica de forma única al elemento y permite vincularlo con su etiqueta <code>&lt;<span class="tag">label</span>&gt;</code> mediante el atributo <code><span class="attribute">for</span></code>.
+            Por otro lado <code><span class="attribute">name</span></code> define la clave con la que viajan los datos hacia el servidor al enviar el formulario, y <code><span class="attribute">form</span></code> permite asociar el input a un formulario específico.
+        </p>
+    </article>
+
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="tag">form</span>&gt;
+
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">label</span>
+                    <span class="attribute">form</span>=<span class="value">"text"</span>&gt;text&lt;/<span class="tag">label</span>&gt;
+
+                    <br>
+                    &nbsp;&nbsp;&lt;<span class="tag">input</span>
+                    <span class="attribute">type</span>=<span class="value">"text"</span>
+                    <span class="attribute">id</span>=<span class="value">"text"</span>
+                    <br>&nbsp;&nbsp;<span class="attribute">name</span>=<span class="value">"text"</span><span class="tag"></span>
+                    <span class="attribute">placeholder</span>=<span class="value">"text..."</span>&gt;
+
+                    <br>
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">label</span>
+                    <span class="attribute">form</span>=<span class="value">"number"</span>&gt;number&lt;/<span class="tag">label</span>&gt;
+
+                    <br>
+                    &nbsp;&nbsp;&lt;<span class="tag">input</span>
+                    <span class="attribute">type</span>=<span class="value">"number"</span>
+                    <span class="attribute">id</span>=<span class="value">"number"</span>
+                    <br>&nbsp;&nbsp;<span class="attribute">name</span>=<span class="value">"number"</span><span class="tag"></span>
+                    <span class="attribute">placeholder</span>=<span class="value">"123..."</span>&gt;
+
+                    <br>&lt;/<span class="tag">form</span>&gt;
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo">
+            <fieldset>
+                <legend>TEXT & NUMBER</legend>
+
+                <div class="field2">
+                    <div class="field">
+                        <label for="text">Text</label>
+                        <input type="text" id="text" name="text" placeholder="text..." required>
+                    </div>
+                    <div class="field">
+                        <label for="number">Number</label>
+                        <input type="number" id="number" name="number" placeholder="123...">
+                    </div>
+                </div>
+            </fieldset>
+            </div>
+
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>TAG</li>
+            <li><div class="attribute-li"></div>ATTRIBUTE</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-select-option">
+    <article>
+        <ul>
+            <li>INTERACTIVE<br>ELEMENT</li>
+            <li>FORM<br>CONTROL</li>
+            <li>DISPLAY<br>INLINE-BLOCK</li>
+        </ul>
+
+        <div class="elemento">
+            <h4><code>&lt;<span class="tag">select</span>&gt;</code></h4>
+            <h2>SELECT<br>OPTION</h2>
+            <h4><code>&lt;<span class="tag">option</span>&gt;</code></h4>
+        </div>
+
+        <ul>
+            <li>HTML</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <article>
+        <ul>
+            <li>SELECT / OPTION</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Elementos para seleccionar opciones.</h3>
+<p>
+    El elemento <code>&lt;<span class="tag">select</span>&gt;</code>
+    representa un control de formulario que permite al usuario elegir
+    una opción de una lista desplegable.
+    Cada elemento de la lista se define mediante 
+    <code>&lt;<span class="tag">option</span>&gt;</code>.
+</p>
+
+<p>
+    <code>&lt;<span class="tag">select</span> <span class="attribute">name</span>=<span class="value">"..."</span>&gt;</code><br>
+    Identifica el campo cuando se envían los datos del formulario.
+</p>
+
+<p>
+    <code>&lt;<span class="tag">option</span> <span class="attribute">value</span>=<span class="value">"es"</span>&gt;</code><br>
+    Define el valor interno que se enviará al servidor al seleccionarla.
+</p>
+    </article>
+
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="tag">form</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">label</span> <span class="attribute">for</span>=<span class="value">"lang"</span>&gt;Languages&lt;/<span class="tag">label</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">select</span> <span class="attribute">id</span>=<span class="value">"lang"</span> <span class="attribute">name</span>=<span class="value">"lang"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">option</span> <span class="attribute">value</span>=<span class="value">"es"</span>&gt; Español
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">/option</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">option</span> <span class="attribute">value</span>=<span class="value">"en"</span>&gt; English
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">/option</span>&gt;
+                    <br>
+                    &nbsp;&nbsp;&lt;/<span class="tag">select</span>&gt;
+                    <br>&lt;<span class="tag">form</span>&gt;
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo">
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>SELECT</legend>
+                    <div class="field">
+                        <label for="country">Languages</label>
+                        <select id="country" name="country">
+                            <option value="" disabled selected>Select a language</option>
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>TAG</li>
+            <li><div class="attribute-li"></div>ATTRIBUTE</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-textarea">
+    <article>
+        <ul>
+            <li>FORM<br>CONTROL</li>
+            <li>FORM-ASSOCIATED<br>ELEMENT</li>
+            <li>DISPLAY<br>INLINE-BLOCK</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>TEXT<br>AREA<span></span></h2>
+            <h4><code>&lt;<span class="tag">textarea</span>&gt;</code></h4>
+        </div>
+
+        <ul>
+            <li>HTML</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <article>
+        <ul>
+            <li>TEXTAREA</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Control para introducir texto de varias líneas.</h3>
+<p>
+            El elemento <code>&lt;<span class="tag">textarea</span>&gt;</code>
+            representa un control de formulario que permite al usuario escribir
+            y editar texto en múltiples líneas.
+        </p>
+
+        <p>
+            A diferencia de <code>&lt;<span class="tag">input</span>&gt;</code>,
+            está diseñado para contenidos más extensos, como comentarios,
+            mensajes o descripciones.
+        </p>
+
+        <p>
+            <code>&lt;<span class="tag">textarea</span> <span class="attribute">name</span>=<span class="value">"mensaje"</span>&gt;&lt;/<span class="tag">textarea</span>&gt;</code><br>
+            Requiere una etiqueta de cierre y el atributo name para identificar los datos enviados.
+        </p>
+
+        <p>
+            <code>&lt;<span class="tag">textarea</span> <span class="attribute">rows</span>=<span class="value">"4"</span> <span class="attribute">cols</span>=<span class="value">"50"</span>&gt;&lt;/<span class="tag">textarea</span>&gt;</code><br>
+            Define el tamaño inicial en filas y columnas (aunque hoy se suele controlar con CSS).
+        </p>
+    </article>
+
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="tag">form</span>&gt;
+                    <br>&lt;<span class="tag">label</span> <span class="attribute">for</span>=<span class="value">"message"</span>&gt;Textarea&lt;/<span class="tag">label</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">textarea</span> 
+                    <br>&nbsp;&nbsp;<span class="attribute">id</span>=<span class="value">"message"</span> 
+                    <br>&nbsp;&nbsp;<span class="attribute">name</span>=<span class="value">"message"</span>
+                    <br>&nbsp;&nbsp;<span class="attribute">rows</span>=<span class="value">"3"</span><span class="tag"></span>
+                    <br>&nbsp;&nbsp;Write your message...
+                    <br>&nbsp;&nbsp;&lt;/<span class="tag">textarea</span>&gt;
+                    <br>&lt;/<span class="tag">form</span>&gt;
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo">
+            <fieldset>
+                <legend>TEXTAREA</legend>
+                <div class="field">
+                    <label for="textarea">Textarea</label>
+                    <textarea id="textarea" name="textarea" rows="2" placeholder="Write your message..."></textarea>
+                </div>
+            </fieldset>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>TAG</li>
+            <li><div class="attribute-li"></div>ATTRIBUTE</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-button">
+    <article>
+        <ul>
+            <li>INTERACTIVE<br>ELEMENT</li>
+            <li>FORM<br>CONTROL</li>
+            <li>DISPLAY<br>INLINE-BLOCK</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>BUTTON<span></span></h2>
+            <h4><code>&lt;<span class="tag">button</span>&gt;</code></h4>
+        </div>
+
+        <ul>
+            <li>HTML</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+<article>
+        <ul>
+            <li>BUTTON</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Elemento interactivo.</h3>
+<p>
+    El elemento <code>&lt;<span class="tag">button</span>&gt;</code> representa un botón interactivo que el usuario puede activar para realizar una acción, como enviar un formulario, restablecer sus datos o interactuar con scripts.
+    Su comportamiento depende fundamentalmente del atributo <code><span class="attribute">type</span></code>.
+</p>
+
+<p>
+    <code>&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"submit"</span><span class="tag"></span>&gt;</code><br>Envía los datos del formulario al servidor por defecto.
+</p>
+
+<p>
+    <code>&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"reset"</span><span class="tag"></span>&gt;</code><br>Restablece todos los campos del formulario a sus valores iniciales.
+</p>
+
+<p>
+    <code>&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"button"</span><span class="tag"></span>&gt;</code><br>Botón genérico sin comportamiento predeterminado, ideal para programar acciones con JavaScript.
+</p>
+</article>
+
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="tag">form</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"submit"</span>&gt; Submit
+                    <br>&nbsp;&nbsp;&lt;/<span class="tag">button</span>&gt;
+                    <br>
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"reset"</span>&gt; Reset 
+                    <br>&nbsp;&nbsp;<span class="tag">&lt;/button&gt;</span>
+                    <br>
+                    <br>&nbsp;&nbsp;&lt;<span class="tag">button</span> <span class="attribute">type</span>=<span class="value">"button"</span>&gt; Action
+                    <br>&nbsp;&nbsp;&lt;/<span class="tag">button</span>&gt;<br>
+                    &lt;/<span class="tag">form&gt;</span>
+                </code>
+            </div>
+        </div>
+        <div class="ejemplo">
+            <fieldset>
+                <legend>BUTTONS</legend>
+                <div class="field2">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                    <button type="button">Action</button>
+                </div>
+            </fieldset>
+        </div>
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>TAG</li>
+            <li><div class="attribute-li"></div>ATTRIBUTE</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-form-elements">
+
+    <!-- COLUMNA 1 -->
+    <article>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>TEXT & NUMBER</legend>
+
+                <div class="field2">
+                    <div class="field">
+                        <label for="text">Text</label>
+                        <input type="text" id="text" name="text" placeholder="text..." required>
+                    </div>
+                    <div class="field">
+                        <label for="number">Number</label>
+                        <input type="number" id="number" name="number" placeholder="123...">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="••••••••" 
+                                autocomplete="current-password" minlength="8" required>
+                        <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
+                            <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="eye-off-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" autocomplete="email">
+                </div>
+
+                <div class="field">
+                    <label for="tel">Tel</label>
+                    <input type="tel" id="tel" name="tel" placeholder="+55 (11) 99999-9999" autocomplete="tel">
+                </div>
+
+                <div class="field">
+                    <label for="url">URL</label>
+                    <input type="url" id="url" name="url" placeholder="https://example.com" autocomplete="url">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>SEARCH</legend>
+                <div class="field">
+                    <label for="topic-search">Search</label>
+                    <div class="search-wrapper">
+                        <input id="topic-search" type="search" name="q" placeholder="Search..." autocomplete="off">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+
+    <!-- COLUMNA 2 -->
+    <article>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>TEXTAREA</legend>
+                <div class="field">
+                    <label for="textarea">Textarea</label>
+                    <textarea id="textarea" name="textarea" rows="4" placeholder="Write your message..."></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>DATA & TIME</legend>
+                <div class="field2">
+                    <div class="field">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                    <div class="field">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="datetime">Date & Time</label>
+                    <input type="datetime-local" id="datetime" name="datetime">
+                </div>
+
+                <div class="field">
+                    <label for="week">Week</label>
+                    <input type="week" id="week" name="week">
+                </div>
+
+                <div class="field">
+                    <label for="month">Month</label>
+                    <input type="month" id="month" name="month">
+                </div>
+            </fieldset>
+        </form>
+    </article>
+
+    <!-- COLUMNA 3 -->
+    <article>
+        <form action="#" method="post">
+            <div class="field2">
+                <fieldset>
+                    <legend>SELECT</legend>
+                    <div class="field">
+                        <label for="country">Country</label>
+                        <select id="country" name="country">
+                            <option value="" disabled selected>Select a country</option>
+                            <option value="ar">Argentina</option>
+                            <option value="br">Brazil</option>
+                            <option value="mx">Mexico</option>
+                            <option value="es">Spain</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>COLOR</legend>
+                    <div class="field">
+                        <label for="color">Choose color</label>
+                        <div class="color-wrapper">
+                            <input type="color" id="color" name="color" value="#8F8F8F">
+                            <span class="color-value">#8F8F8F</span>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <legend>FILE</legend>
+                <div class="file-card">
+                    <input type="file" id="file" name="file" class="file-input" accept="image/*,.pdf,.doc,.docx">
+                    <label for="file" class="file-label">
+                        <div class="file-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                        <span class="file-title">Upload file</span>
+                        <span class="file-subtitle" id="file-name">No file selected</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <div class="field2">
+                <fieldset>
+                    <legend>CHECKBOX</legend>
+                    <div class="field">
+                        <div class="field-check">
+                            <input type="checkbox" id="check1" name="interests" value="design">
+                            <label for="check1">Design</label>
+                        </div>
+                        <div class="field-check">
+                            <input type="checkbox" id="check2" name="interests" value="development">
+                            <label for="check2">Development</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>RADIO</legend>
+                    <div class="field">
+                        <div class="field-check">
+                            <input type="radio" id="radio1" name="plan" value="free">
+                            <label for="radio1">Free</label>
+                        </div>
+                        <div class="field-check">
+                            <input type="radio" id="radio2" name="plan" value="pro">
+                            <label for="radio2">Pro</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <legend>BUTTONS</legend>
+                <div class="field2">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                    <button type="button">Action</button>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+
+</template>
+
+
+<template id="tpl-display-grid">
+
+    <!-- ========== CARD 1: Portada ========== -->
+    <article>
+        <ul>
+            <li>LAYOUT<br>SYSTEM</li>
+            <li>CSS<br>MODULE</li>
+            <li>DISPLAY<br>GRID</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>GRID<br>DISPLAY</h2>
+            <h4><code><span class="property">display</span>: <span class="value">grid</span>;</code></h4>
+        </div>
+
+        <ul>
+            <li>CSS</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <!-- ========== CARD 2: Explicación ========== -->
+    <article>
+        <ul>
+            <li>DISPLAY / GRID</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Sistema de diseño bidimensional.</h3>
+
+<p>
+    CSS Grid es un sistema de layout bidimensional que permite organizar elementos 
+    en filas y columnas de forma simultánea. Al aplicar 
+    <code><span class="property">display</span>: <span class="value">grid</span></code> 
+    a un elemento, este se convierte en un grid container y sus hijos directos 
+    se transforman automáticamente en grid items.
+</p>
+
+<p>
+    El contenedor define la estructura de la cuadrícula mediante propiedades como 
+    <code><span class="property">grid-template-columns</span></code>, 
+    <code><span class="property">grid-template-rows</span></code> y 
+    <code><span class="property">grid-template-areas</span></code>. 
+    La propiedad <code><span class="property">gap</span></code> permite establecer 
+    el espacio entre filas y columnas.
+</p>
+
+<p>
+    Los grid items se distribuyen dentro de esta estructura y pueden ocupar una o varias 
+    columnas y filas, permitiendo crear composiciones regulares o de tamaños y posiciones 
+    diferentes.
+</p>
+
+    </article>
+
+    <!-- ========== CARD 3: Código + Ejemplo ========== -->
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="selector">div</span> <span class="attribute">class</span>:<span class="value">"grid"</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="selector">div</span>&gt;item 1&lt;/<span class="selector">div</span>&gt;&lt;<span class="selector">div</span>&gt;item 2&lt;/<span class="selector">div</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="selector">div</span>&gt;item 3&lt;/<span class="selector">div</span>&gt;&lt;<span class="selector">div</span>&gt;item 4&lt;/<span class="selector">div</span>&gt;
+                    <br>&lt;/<span class="selector">div</span>&gt;
+
+
+                    <br><br>.<span class="selector">grid</span> {
+                    <br>&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>; <span class="property">gap</span>: <span class="value">10px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;<br>
+                }
+                </code>
+                <code>
+                    <br><span class="selector">.grid <span class="tag">div</span></span> { <span class="property">background</span>: <span class="value">#4673ff</span>; }
+                </code>
+            </div>
+        </div>
+
+<div class="grid-ejemplo-grid">
+  <div>item 1</div>
+  <div>item 2</div>
+  <div>item 3</div>
+  <div>item 4</div>
+</div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>SELECTOR</li>
+            <li><div class="property-li"></div>PROPERTY</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+
+</template>
+<template id="tpl-grid-columns">
+    <!-- ========== CARD 1: Portada ========== -->
+    <article>
+        <ul>
+            <li>LAYOUT<br>SYSTEM</li>
+            <li>CSS<br>MODULE</li>
+            <li>GRID<br>COLUMNS</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>GRID<br>COLUMNS</h2>
+            <h4><code><span class="property">grid-template-columns</span>;</code></h4>
+        </div>
+
+        <ul>
+            <li>CSS</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <!-- ========== CARD 2: Explicación ========== -->
+<article>
+    <ul>
+        <li>GRID / COLUMNS</li>
+        <li>02 / 03 →</li>
+    </ul>
+
+<h3>Columnas de la cuadrícula.</h3>
+
+<p>
+    La propiedad <code><span class="property">grid-template-columns</span></code>
+    define las columnas explícitas de un <code><span class="property">grid container</span></code>
+    estableciendo su número y tamaño mediante los valores especificados.
+</p>
+
+
+<p>
+    Unidades fijas:
+    <code><span class="value">px</span></code>,
+    <code><span class="value">rem</span></code>
+    y otras unidades de longitud.
+</p>
+
+<p>
+    Unidad flexible:
+    <code><span class="value">fr</span></code>
+    (<em>fraction</em>) distribuye proporcionalmente el espacio disponible
+    entre las columnas.
+</p>
+
+<p>
+    Función <code><span class="value">repeat()</span></code>:
+    permite repetir una definición de columnas.
+    Por ejemplo,
+    <code><span class="value">repeat(3, 1fr)</span></code>
+    crea tres columnas de igual tamaño.
+</p>
+
+<p>
+    Función <code><span class="value">minmax()</span></code>:
+    establece un tamaño mínimo y máximo para una columna.
+        Por ejemplo,
+    <code><span class="value">minmax(200px, 1fr)</span></code>
+    permite que la columna tenga un mínimo de
+    <code><span class="value">200px</span></code>
+    y pueda crecer hasta ocupar una fracción del espacio disponible.
+</p>
+
+</article>
+
+
+    <!-- ========== CARD 3: Código + Ejemplo ========== -->
+    <article>
+
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    &lt;<span class="selector">div</span> <span class="attribute">class</span>:<span class="value">"grid"</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="selector">div</span>&gt;column 1&lt;/<span class="selector">div</span>&gt;
+                    <br>&nbsp;&nbsp;&lt;<span class="selector">div</span>&gt;column 2&lt;/<span class="selector">div</span>&gt;
+                    <br>&lt;/<span class="selector">div</span>&gt;
+                </code>
+            </div>
+        </div>
+
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    <span class="selector">.grid</span> {
+                    <br>&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>; <span class="property">gap</span>: <span class="value">10px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;<br>
+                    }
+                </code>
+                <code>
+                    <br><span class="selector">.grid <span class="tag">div</span></span> { <span class="property">background</span>: <span class="value">#4673ff</span>; }
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo-grid-container">
+            <div class="grid-ejemplo-column">
+                <div>column 1</div>
+                <div>column 2</div>
+            </div>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>SELECTOR</li>
+            <li><div class="property-li"></div>PROPERTY</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+</template>
+<template id="tpl-grid-rows">
+
+    <!-- ========== CARD 1: Portada ========== -->
+    <article>
+        <ul>
+            <li>LAYOUT<br>SYSTEM</li>
+            <li>CSS<br>MODULE</li>
+            <li>GRID<br>ROWS</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>GRID<br>ROWS</h2>
+            <h4><code><span class="property">grid-template-rows</span>;</code></h4>
+        </div>
+
+        <ul>
+            <li>CSS</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <!-- ========== CARD 2: Explicación ========== -->
+    <article>
+        <ul>
+            <li>GRID / ROWS</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Define las filas de la cuadrícula.</h3>
+
+        <p>
+            La propiedad <code><span class="property">grid-template-rows</span></code>
+            define las filas explícitas de un<code> <span class="property">container</span></code>,
+            estableciendo su número y tamaño mediante los valores especificados.
+            Cada valor representa una fila y determina el tamaño de su correspondiente
+            <em>grid track</em>.
+        </p>
+
+        <p>
+            El valor <code><span class="value">auto</span></code> permite que
+            el tamaño de una fila se determine de acuerdo con su contenido y
+            el espacio disponible.
+        </p>
+
+        <p>
+            Por ejemplo,
+            <code><span class="property">grid-template-rows</span>:</code> <code><span class="value">40px auto 60px</span>;</code>
+            define tres filas: la primera con un tamaño de
+            <code><span class="value">40px</span></code>, la segunda adaptable a su contenido
+            y la tercera con un tamaño de
+            <code><span class="value">60px</span></code>.
+        </p>
+
+        <p>
+            Las filas definidas mediante
+            <code><span class="property">grid-template-rows</span></code>
+            forman parte del grid explícito.
+            Si se necesitan filas adicionales, Grid puede generarlas
+            automáticamente como parte del grid implícito.
+        </p>
+    </article>
+
+    <!-- ========== CARD 3: Código + Ejemplo ========== -->
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    <span class="selector">.grid</span> {<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br>
+                    &nbsp;&nbsp;<span class="property">gap</span>: <span class="value">10px</span>;
+                    <br>&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;
+                    <br>&nbsp;&nbsp;<span class="property">grid-template-rows</span>: <span class="value">40px auto 60px</span>;<br>
+                    }<br>
+                    <span class="selector">.grid div</span> { <span class="property">background</span>: <span class="value">#4673ff</span>; }
+                </code>
+            </div>
+        </div>
+
+<div class="grid-ejemplo-row">
+  <div>fila 1</div>
+  <div>fila 1</div>
+  <div>fila 2</div>
+  <div>fila 2</div>
+  <div>fila 3</div>
+  <div>fila 3</div>
+</div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>SELECTOR</li>
+            <li><div class="property-li"></div>PROPERTY</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+
+</template>
+<template id="tpl-grid-area">
+
+
+    <!-- ========== CARD 1: Portada ========== -->
+    <article>
+        <ul>
+            <li>LAYOUT<br>SYSTEM</li>
+            <li>CSS<br>MODULE</li>
+            <li>GRID<br>AREA</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>GRID<br>AREA</h2>
+            <h4><code><span class="property">grid-template-areas</span>;</code></h4>
+        </div>
+
+        <ul>
+            <li>CSS</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <!-- ========== CARD 2: Explicación ========== -->
+    <article>
+        <ul>
+            <li>GRID / AREA</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Áreas de la cuadrícula.</h3>
+
+        <p>
+            La propiedad <code><span class="property">grid-template-areas</span></code>
+            permite definir zonas con nombre dentro del <code><span class="property">grid container</span></code>,
+            creando un mapa visual de la estructura del layout.
+        </p>
+
+        <p>
+            Cada cadena de texto representa una fila, y las palabras
+            dentro de ella representan las columnas. Las áreas con el
+            mismo nombre se unen automáticamente formando una zona más grande.
+        </p>
+
+        <p>
+            Luego, cada ítem se posiciona en una de esas zonas usando la propiedad
+            <code><span class="property">grid-area</span></code>.
+        </p>
+
+        <p>
+            Ejemplo:<br>
+            <code><span class="value">"header header"</span></code><br>
+            <code><span class="value">"aside main"</span></code><br>
+            <code><span class="value">"footer footer"</span></code>
+        </p>
+
+        <p>
+            Este patrón crea un layout clásico con header, sidebar, contenido principal y footer.
+        </p>
+    </article>
+
+    <!-- ========== CARD 3: Código + Ejemplo ========== -->
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    <span class="tag">.grid</span> {<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>; <span class="property">gap</span>: <span class="value">10px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-areas</span>:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"header header"</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"aside main"</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"footer footer"</span>; }
+                    <br><span class="selector">.header</span>  { <span class="property">grid-area</span>: <span class="value">header</span>; }
+                    <br><span class="selector">.aside</span> { <span class="property">grid-area</span>: <span class="value">aside</span>; }
+                    <br><span class="selector">.main</span>    { <span class="property">grid-area</span>: <span class="value">main</span>; }
+                    <br><span class="selector">.footer</span>  { <span class="property">grid-area</span>: <span class="value">footer</span>; }
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo-grid-container">
+<div class="grid-ejemplo-area">
+
+  <div class="header">Header</div>
+  <div class="main">Main</div>
+  <div class="aside">Aside</div>
+  <div class="footer">footer</div>
+
+</div>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>SELECTOR</li>
+            <li><div class="property-li"></div>PROPERTY</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+
+</template>
+<template id="tpl-grid-items">
+
+    <!-- ========== CARD 1: Portada ========== -->
+    <article>
+        <ul>
+            <li>LAYOUT<br>SYSTEM</li>
+            <li>CSS<br>MODULE</li>
+            <li>GRID<br>ITEMS</li>
+        </ul>
+
+        <div class="elemento">
+            <h2>GRID<br>ITEMS</h2>
+            <h4><code><span class="property">grid-column</span>;</code></h4>
+            <h4><code><span class="property">grid-row</span>;</code></h4>
+        </div>
+
+        <ul>
+            <li>CSS</li>
+            <li>01 / 03 →</li>
+        </ul>
+    </article>
+
+    <!-- ========== CARD 2: Explicación ========== -->
+    <article>
+        <ul>
+            <li>GRID / ITEMS</li>
+            <li>02 / 03 →</li>
+        </ul>
+
+        <h3>Ítems de la cuadrícula.</h3>
+
+<p>
+    Los <code><span class="property">grid items</span></code> son los hijos directos del 
+    <code><span class="property">grid container</span></code>.
+    Podemos controlar su posición y el espacio que ocupan dentro del grid mediante las propiedades
+    <code><span class="property">grid-column</span></code> y 
+    <code><span class="property">grid-row</span></code>.
+</p>
+
+<p>
+    Estas propiedades utilizan números de línea para indicar dónde comienza y termina el ítem
+    (<code><span class="value">1 / 3</span></code>) y también pueden utilizar la palabra clave
+    <code><span class="value">span</span></code> para indicar cuántas columnas o filas debe ocupar.
+</p>
+
+<p>
+    También existe la propiedad corta
+    <code><span class="property">grid-area</span></code>,
+    que permite definir la posición del ítem mediante filas y columnas, o asignarlo a un área nombrada.
+</p>
+
+<p>
+    Ejemplo:<br>
+    <code><span class="property">grid-column</span>: <span class="value">1 / 3</span>;</code><br>
+    <code><span class="property">grid-row</span>: <span class="value">span 2</span>;</code>
+</p>
+
+<p>
+    Esto hace que el ítem ocupe dos columnas y dos filas.
+</p>
+
+    </article>
+
+    <!-- ========== CARD 3: Código + Ejemplo ========== -->
+    <article>
+        <div class="code-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-body">
+                <code>
+                    <span class="selector">.grid</span> { 
+                    <br><span class="property">display</span>: <span class="value">grid</span>; <span class="property">gap</span>: <span class="value">10px</span>; 
+                    <br><span class="property">grid-template-columns</span>: <span class="value">1fr 1fr 1fr</span>;
+                    <br><span class="property">grid-template-rows</span>: <span class="value"><span style="color: aqua;">repeat</span>(2, 1fr)</span>; }
+                    <br><span class="selector">.item-1</span> {
+                    <br>&nbsp;&nbsp;<span class="property">grid-column</span>: <span class="value">1 / span 1</span>; }
+                    <br><span class="selector">.item-2</span> {
+                    <br>&nbsp;&nbsp;<span class="property">grid-column</span>: <span class="value">2 / span 1</span>; }
+                    <br><span class="selector">.item-3</span> {
+                    <br>&nbsp;&nbsp;<span class="property">grid-column</span>: <span class="value">2 / span 2</span>;
+                    <br>&nbsp;&nbsp;<span class="property">grid-row</span>: <span class="value">1 / span 2</span>; }
+                </code>
+            </div>
+        </div>
+
+        <div class="ejemplo-grid-container">
+            <div class="grid-ejemplo-items">
+                <div class="item-1">item 1</div>
+                <div class="item-2">item 2</div>
+                <div class="item-3">item 3</div>
+            </div>
+        </div>
+
+        <ul>
+            <li>← 03 / 03</li>
+            <li><div class="tag-li"></div>SELECTOR</li>
+            <li><div class="property-li"></div>PROPERTY</li>
+            <li><div class="value-li"></div>VALUE</li>
+        </ul>
+    </article>
+
+</template>
+<template id="tpl-grid-projects">
+
+    <!-- ========== 1. Galería Artística (Collage) ========== -->
+    <article>
+        <div class="gallery artistic-gallery">
+            <div class="item item-1"><img src="IMG/01.JPG" alt=""></div>
+            <div class="item item-2"><img src="IMG/02.JPG" alt=""></div>
+            <div class="item item-3"><img src="IMG/03.JPG" alt=""></div>
+            <div class="item item-4"><img src="IMG/04.JPG" alt=""></div>
+            <div class="item item-5"><img src="IMG/05.JPG" alt=""></div>
+            <div class="item item-6"><img src="IMG/06.JPG" alt=""></div>
+            <div class="item item-7"><img src="IMG/07.JPG" alt=""></div>
+            <div class="item item-8"><img src="IMG/08.JPG" alt=""></div>
+        </div>
+    </article>
+
+    <!-- ========== 2. Layout con Grid Areas ========== -->
+     <article>
+<div class="layout-grid">
+    <header class="header">Header
+    <nav class="nav">Navigation</nav>
+    </header>
+    <aside class="sidebar">Sidebar</aside>
+    
+    <main class="main">main
+        <section class="section">section
+            <article class="article">Article</article>
+        </section>
+        <section class="section">section
+            <article class="article">Article</article>
+        </section>
+    </main>
+    
+    <footer class="footer">Footer</footer>
+</div>
+</article>
+
+    <!-- ========== 3. Galería estilo Pinterest ========== -->
+     <article>
+<div class="pinterest-gallery">
+    <div class="pin"><img src="IMG/24.png" alt=""></div>
+    <div class="pin"><img src="IMG/20.png" alt=""></div>
+    <div class="pin"><img src="IMG/22.jpg" alt=""></div>
+    <div class="pin"><img src="IMG/25.png" alt=""></div>
+    <div class="pin"><img src="IMG/21.png" alt=""></div>
+</div>
+</article>
+
+</template>
+
+
+
+
+
+
+    <script src="SCRIPTS/form.js"></script>
+    <script src="SCRIPTS/script.js"></script>
+</body>
+</html>
