@@ -1,18 +1,46 @@
 * {
-    padding: 0; margin: 0;
+    padding: 0; 
+    margin: 0;
     box-sizing: border-box;
 }
+
+/* --- CONFIGURACIÓN DE APP FULLSCREEN --- */
+html, body {
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* dynamic viewport height */
+    overflow: hidden; /* Bloquea el scroll global de la app */
+    overscroll-behavior: none; /* Evita el rebote / pull-to-refresh en móviles */
+    touch-action: manipulation;
+}
+
+body {
+    color: #A0A0A0;
+    background-color: #0A0A0A;
+    font-family: 'Courier New', Courier, monospace;
+    display: grid;
+    /* Grid dinámico: Header y Footer se adaptan, Main toma exactamente el resto del espacio */
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header header"
+        "main   aside"
+        "footer aside";
+}
+
 .flex {
     display: flex; gap: 1em;
     align-items: center;
     justify-content: center;
 }
+
 .flex-column {
     display: flex; gap: 1em;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
+
 #starfield {
     position: fixed;
     inset: 0;
@@ -21,124 +49,124 @@
     z-index: -1;
     background: #000;
 }
-body {
-    width: 100%;
-    height: 100vh;
-    color: #A0A0A0;
-    background-color: #0A0A0A;
-    font-family: 'Courier New', Courier, monospace;
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: 10vh 80vh 10vh;
-    grid-template-areas:
-        "header header"
-        "main   aside"
-        "footer aside";
-}
+
 a {
     font-size: 0.7rem;
-    font-family: "Roboto Mono";
+    font-family: "Roboto Mono", monospace;
     font-weight: 300;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
     color: #A0A0A0;
 }
+
 /* --- HEADER --- */
 header {
     grid-area: header;
+    height: 60px;
     padding: 0em 2em;
     border-bottom: 1px solid #1A1A1A;
-    display: flex; gap: 2em; /* flex */
+    display: flex; 
+    gap: 2em;
     align-items: center;
     justify-content: space-between;
 }
+
 header nav {
     width: 100%;
 }
+
 header nav ul {
     width: 100%;
-    display: flex; gap: 1em;
+    display: flex; 
+    gap: 1em;
     justify-content: space-between;
     list-style-type: none;
 }
-@media (max-width: 768px) {
-    header {
-        padding: 0em 1em;
-    }
-    header ul {
-        display: flex; /* flex */
-        align-items: center;
-        justify-content: center;
-    }
-}
+
 /* --- MAIN --- */
 main {
     grid-area: main;
-    padding: 2em;
+    padding: 1.5em;
+    height: 100%;
+    min-height: 0; /* Clave: permite que el grid reduzca el área sin desbordar */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
-@media (max-width: 768px) {
-    main {
-        padding: 1em;
-    }
-}
+
 section {
     width: 100%;
     height: 100%;
     border-radius: 1em;
     border: 1px solid #1A1A1A;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
+
 .content-section {
-  display: none;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; /* Permite scroll solo DENTRO de la sección si el contenido excede */
 }
+
 .content-section.active {
-  display: block; /* o flex si prefieres */
+    display: block; 
 }
+
 .project-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+    width: 100%;
+    height: 100%;
+    border: none;
     border-radius: 1em;
-  display: block;
+    display: block;
 }
+
 /* ----- ASIDE ----- */
 aside {
     grid-area: aside;
     padding: 2em;
     border-left: 1px solid #1A1A1A;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
 }
+
 aside nav {
     height: auto;
 }
+
 aside nav ul {
     height: 100%;
     list-style-type: none;
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     flex-direction: column;
 }
+
 /* ----- FOOTER ----- */
 footer {
     grid-area: footer;
+    height: 50px;
     padding: 0em 2em;
     border-top: 1px solid #1A1A1A;
-    display: flex; /* flex */
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 footer nav {
     width: 100%;
 }
+
 footer nav ul {
     width: 100%;
-    display: flex; gap: 1em;
+    display: flex; 
+    gap: 1em;
     justify-content: space-between;
     list-style-type: none;
-}
-@media (max-width: 768px) {
-    footer {
-        padding: 0em 1em;
-    }
 }
 
 /* Botón para abrir el menú (oculto en escritorio) */
@@ -156,20 +184,39 @@ footer nav ul {
 /* --- ESTILOS RESPONSIVOS PARA MÓVIL --- */
 @media (max-width: 768px) {
     body {
-        /* Reestructuramos el grid a una sola columna */
         grid-template-columns: 1fr;
-        grid-template-rows: 8vh 84vh 8vh;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas:
             "header"
             "main"
             "footer";
     }
 
-    .menu-toggle {
-        display: block; /* Mostramos el botón en móvil */
+    header {
+        padding: 0 1em;
+        height: 50px;
     }
 
-/* Convertimos el aside en un modal desplegable centrado */
+    header nav ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main {
+        padding: 0.8em;
+    }
+
+    footer {
+        padding: 0 1em;
+        height: 50px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Modal desplegable del aside centrado */
     aside {
         position: fixed;
         top: 50%;
@@ -181,13 +228,13 @@ footer nav ul {
         max-height: 80vh;
         background-color: rgba(10, 10, 10, 0.95);
         backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         z-index: 1000;
         border: 1px solid #1A1A1A;
         border-radius: 8px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         padding: 2em;
         
-        /* Oculto por defecto con animación de opacidad */
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease, transform 0.3s ease;
@@ -200,20 +247,9 @@ footer nav ul {
         transform: translate(-50%, -50%) scale(1);
     }
 
-    /* Centramos las opciones de navegación */
     aside nav ul {
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
-        gap: 1.2em;
-    }
-
-    /* Clase activa que despliega el aside */
-    aside.active {
-        right: 0;
-    }
-
-    aside nav ul {
-        align-items: flex-start; /* Alineación a la izquierda en móvil */
         gap: 1.5em;
     }
 
