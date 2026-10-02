@@ -49,7 +49,7 @@ header {
     grid-area: header;
     padding: 0em 2em;
     border-bottom: 1px solid #1A1A1A;
-    display: flex; /* flex */
+    display: flex; gap: 2em; /* flex */
     align-items: center;
     justify-content: space-between;
 }
@@ -62,10 +62,22 @@ header nav ul {
     justify-content: space-between;
     list-style-type: none;
 }
+@media (max-width: 768px) {
+    header ul {
+        display: flex; /* flex */
+        align-items: center;
+        justify-content: center;
+    }
+}
 /* --- MAIN --- */
 main {
     grid-area: main;
     padding: 2em;
+}
+@media (max-width: 768px) {
+    main {
+        padding: 1em;
+    }
 }
 section {
     width: 100%;
@@ -119,4 +131,86 @@ footer nav ul {
     display: flex; gap: 1em;
     justify-content: space-between;
     list-style-type: none;
+}
+
+
+/* Botón para abrir el menú (oculto en escritorio) */
+.menu-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    color: #A0A0A0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+}
+
+/* --- ESTILOS RESPONSIVOS PARA MÓVIL --- */
+@media (max-width: 768px) {
+    body {
+        /* Reestructuramos el grid a una sola columna */
+        grid-template-columns: 1fr;
+        grid-template-rows: 8vh 84vh 8vh;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
+
+    .menu-toggle {
+        display: block; /* Mostramos el botón en móvil */
+    }
+
+/* Convertimos el aside en un modal desplegable centrado */
+    aside {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 85%;
+        max-width: 350px;
+        height: auto;
+        max-height: 80vh;
+        background-color: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        border: 1px solid #1A1A1A;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        padding: 2em;
+        
+        /* Oculto por defecto con animación de opacidad */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Estado visible centrado */
+    aside.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Centramos las opciones de navegación */
+    aside nav ul {
+        align-items: center;
+        justify-content: center;
+        gap: 1.2em;
+    }
+
+    /* Clase activa que despliega el aside */
+    aside.active {
+        right: 0;
+    }
+
+    aside nav ul {
+        align-items: flex-start; /* Alineación a la izquierda en móvil */
+        gap: 1.5em;
+    }
+
+    aside nav ul li a {
+        font-size: 0.9rem;
+    }
 }

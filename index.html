@@ -19,6 +19,7 @@
                 <li><a href="index.html">[ WEB_DEV // LAV ]</a></li>
             </ul>
         </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">MENU</button>
     </header>
 
     <main class="flex-column">
@@ -57,47 +58,67 @@
                 <li><a href="#" class="category-btn" data-section="slider">EX 0.2 SLIDER</a></li>
             </ul>
         </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">[ MENU ]</button>
     </aside> 
 
     <footer class="flex">
         <nav>
             <ul>
                 <li><a href="index.html">[ SYSTEM ONLINE ]</a></li>
-                <li><a href="index.html">version: 0.1</a></li>
                 <li><a href="index.html">contact</a></li>
-                <li><a href=""></a>© 2025</li>
+                <li><a href=""></a>© 2026</li>
             </ul>
         </nav>
     </footer>
 
     <script src="script.js"></script>
     <script>
-// Seleccionamos todos los botones del aside
+// Seleccionamos los elementos necesarios
 const buttons = document.querySelectorAll('.category-btn');
-
-// Seleccionamos todas las secciones del main
 const sections = document.querySelectorAll('.content-section');
+const menuToggle = document.getElementById('menuToggle');
+const aside = document.querySelector('aside');
 
-// Recorremos cada botón
+// Lógica para abrir/cerrar el menú desplegable en móvil
+if (menuToggle && aside) {
+    menuToggle.addEventListener('click', () => {
+        aside.classList.toggle('active');
+        // Cambiamos el texto del botón según el estado
+        if (aside.classList.contains('active')) {
+            menuToggle.textContent = 'CLOSE';
+        } else {
+            menuToggle.textContent = 'MENU';
+        }
+    });
+}
+
+// Lógica para cambiar de sección
 buttons.forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
     
     // 1. Quitamos la clase "active" de todos los botones
     buttons.forEach(btn => btn.classList.remove('active'));
     
-    // 2. Le ponemos "active" al botón que se acaba de pulsar
+    // 2. Le ponemos "active" al botón pulsado
     button.classList.add('active');
     
-    // 3. Obtenemos el valor del data-section (lab, proyectos o gia)
+    // 3. Obtenemos la sección destino
     const sectionId = button.dataset.section;
     
-    // 4. Quitamos "active" de todas las secciones
+    // 4. Ocultamos las secciones anteriores
     sections.forEach(section => section.classList.remove('active'));
     
-    // 5. Activamos solo la sección que corresponde
+    // 5. Activamos la nueva sección
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
       targetSection.classList.add('active');
+    }
+
+    // 6. Si estamos en versión móvil, cerramos el menú desplegable al hacer clic
+    if (window.innerWidth <= 768) {
+        aside.classList.remove('active');
+        if (menuToggle) menuToggle.textContent = 'MENU';
     }
   });
 });
