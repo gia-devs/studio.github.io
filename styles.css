@@ -7,11 +7,14 @@
 /* --- CONFIGURACIÓN DE APP FULLSCREEN --- */
 html, body {
     width: 100%;
-    height: 100%;
-    height: 100dvh; /* dynamic viewport height */
-    overflow: hidden; /* Bloquea el scroll global de la app */
-    overscroll-behavior: none; /* Evita el rebote / pull-to-refresh en móviles */
-    touch-action: manipulation;
+    /* Fallback para navegadores antiguos */
+    height: 100vh; 
+    /* svh asegura que encaje en la pantalla útil sin tirones */
+    height: 100svh; 
+    position: fixed; /* Evita cualquier desplazamiento del viewport en iOS */
+    inset: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
 }
 
 body {
