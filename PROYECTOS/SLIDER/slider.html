@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slider de imágenes</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: transparent;   /* el cristal lo pone el <section> de tu portafolio */
+}
+
+/* ---------- Contenedor ---------- */
+.gallery {
+  padding: 1em;
+  height: 100%;
+  display: flex; gap: 1em;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* ---------- Miniaturas ---------- */
+.thumbs {
+  display: flex; gap: 0.4em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.thumb {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #2A2A2A;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  opacity: .45;
+  transform: scale(.8);
+  transition: transform .25s, opacity .25s, border-color .25s;
+}
+
+.thumb:hover { opacity: .8; }
+
+.thumb[aria-selected="true"] {
+  opacity: 1;
+  transform: scale(1);
+  border-color: var(--line-hi);
+}
+
+.thumb:focus-visible { outline: 1px solid var(--line-hi); outline-offset: 3px; }
+
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Escenario: solo se ve la imagen activa ---------- */
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.stage:active { cursor: grabbing; }
+.stage:focus-visible { outline: none; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: var(--slide-width);
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: .6rem;
+  list-style: none;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(.985);
+  transition: opacity .5s ease, transform .5s ease, visibility 0s .5s;
+}
+
+.slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition-delay: 0s;
+}
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide, .thumb { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<main class="gallery">
+
+  <!-- Miniaturas -->
+  <div class="thumbs" role="tablist" aria-label="Elegir imagen">
+    <button class="thumb" role="tab" aria-selected="true"  aria-label="Imagen 1"><img src="img/foto1-thumb.jpg" alt=""></button>
+    <button class="thumb" role="tab" aria-selected="false" aria-label="Imagen 2"><img src="img/foto2-thumb.jpg" alt=""></button>
+    <button class="thumb" role="tab" aria-selected="false" aria-label="Imagen 3"><img src="img/foto3-thumb.jpg" alt=""></button>
+    <button class="thumb" role="tab" aria-selected="false" aria-label="Imagen 4"><img src="img/foto4-thumb.jpg" alt=""></button>
+    <button class="thumb" role="tab" aria-selected="false" aria-label="Imagen 5"><img src="img/foto5-thumb.jpg" alt=""></button>
+    <button class="thumb" role="tab" aria-selected="false" aria-label="Imagen 6"><img src="img/foto6-thumb.jpg" alt=""></button>
+  </div>
+
+  <!-- Imágenes -->
+  <div class="stage" tabindex="0" aria-label="Galería de imágenes">
+    <div class="slide is-active"><img src="img/foto1.jpg" alt="Imagen 1" draggable="false"></div>
+    <div class="slide"><img src="img/foto2.jpg" alt="Imagen 2" draggable="false"></div>
+    <div class="slide"><img src="img/foto3.jpg" alt="Imagen 3" draggable="false"></div>
+    <div class="slide"><img src="img/foto4.jpg" alt="Imagen 4" draggable="false"></div>
+    <div class="slide"><img src="img/foto5.jpg" alt="Imagen 5" draggable="false"></div>
+    <div class="slide"><img src="img/foto6.jpg" alt="Imagen 6" draggable="false"></div>
+  </div>
+
+</main>
+
+<script>
+// Si se abre suelto (fuera del iframe), fondo oscuro para que no se vea blanco
+if (window.self === window.top) {
+  document.documentElement.style.background = '#0A0A0A';
+}
+
+const stage  = document.querySelector('.stage');
+const slides = [...document.querySelectorAll('.slide')];
+const thumbs = [...document.querySelectorAll('.thumb')];
+
+let active = 0, startX = 0, dragging = false;
+
+function update(index) {
+  active = Math.max(0, Math.min(index, slides.length - 1));
+  slides.forEach((el, i) => el.classList.toggle('is-active', i === active));
+  thumbs.forEach((el, i) => el.setAttribute('aria-selected', i === active));
+}
+
+// Miniaturas
+thumbs.forEach((t, i) => t.addEventListener('click', () => update(i)));
+
+// Teclado
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') update(active + 1);
+  if (e.key === 'ArrowLeft')  update(active - 1);
+});
+
+// Deslizar (arrastre con mouse o dedo)
+stage.addEventListener('pointerdown', (e) => {
+  dragging = true;
+  startX = e.clientX;
+  stage.setPointerCapture(e.pointerId);
+});
+stage.addEventListener('pointerup', (e) => {
+  if (!dragging) return;
+  dragging = false;
+  const dx = e.clientX - startX;
+  if (Math.abs(dx) > 55) update(active + (dx < 0 ? 1 : -1));
+});
+stage.addEventListener('pointercancel', () => { dragging = false; });
+
+update(0);
+</script>
+</body>
+</html>

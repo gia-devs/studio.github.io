@@ -1,0 +1,67 @@
+@font-face {
+    font-family: "Audiowide";
+    src: url("FONTS/Audiowide/Audiowide-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Exo 2";
+    src: url("FONTS/Exo_2/Exo2-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Michroma";
+    src: url("FONTS/Michroma/Michroma-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Orbitron";
+    src: url("FONTS/Orbitron/Orbitron-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Oxanium";
+    src: url("FONTS/Oxanium/Oxanium-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Quantico";
+    src: url("FONTS/Quantico/Quantico-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("FONTS/roboto/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("FONTS/roboto/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Roboto Flex";
+    src: url("FONTS/roboto/Roboto_Flex/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Roboto Mono";
+    src: url("FONTS/roboto/Roboto_Mono/RobotoMono-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Roboto Serif";
+    src: url("FONTS/roboto/Roboto_Serif/RobotoSerif-VariableFont_GRAD,opsz,wdth,wght.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Roboto Slab";
+    src: url("FONTS/roboto/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("FONTS/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}

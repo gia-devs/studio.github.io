@@ -5,14 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-fonts.css">
 </head>
 <body>
+
+
     <canvas id="starfield"></canvas>
 
-    <main>
-        <h2><a href="/CYBERPUNK/index.html">ORBITRON / CYBERPUNK</a></h2>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">G'IA</a></li>
+                <li><a href="index.html">[ WEB_DEV // LAV ]</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-column">
+        <section id="cat" class="content-section active">
+            <iframe src="cat.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="orbitron" class="content-section">
+            <iframe src="/PROYECTOS/ORBITRON/index.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="tv" class="content-section">
+            <iframe src="/PROYECTOS/forest/forest/src/index.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="tv" class="content-section">
+            <iframe src="/PROYECTOS/TV/tv.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="vt323" class="content-section">
+            <iframe src="/PROYECTOS/VT323/vt323.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="memory" class="content-section">
+            <iframe src="/PROYECTOS/MEMORY/memory.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
+        <section id="slider" class="content-section">
+            <iframe src="/PROYECTOS/SLIDER/slider.html" class="project-iframe" title="Orbitron" loading="lazy"></iframe>
+        </section>
     </main>
 
+    <aside>
+        <nav>
+            <ul>
+                <li><a href="#" class="category-btn" data-section="cat">EX 0.1 CAT</a></li>
+                <li><a href="#" class="category-btn" data-section="orbitron">EX 0.1 ORBITRON</a></li>
+                <li><a href="#" class="category-btn" data-section="tv">EX 0.1 FLOREST</a></li>
+                <li><a href="#" class="category-btn" data-section="tv">EX 0.1 TV</a></li>
+                <li><a href="#" class="category-btn" data-section="vt323">EX 0.1 VT323</a></li>
+                <li><a href="#" class="category-btn" data-section="memory">EX 0.1 MEMORY</a></li>
+                <li><a href="#" class="category-btn" data-section="slider">EX 0.2 SLIDER</a></li>
+            </ul>
+        </nav>
+    </aside> 
+
+    <footer class="flex">
+        <nav>
+            <ul>
+                <li><a href="index.html">[ SYSTEM ONLINE ]</a></li>
+                <li><a href="index.html">version: 0.1</a></li>
+                <li><a href="index.html">contact</a></li>
+                <li><a href=""></a>© 2025</li>
+            </ul>
+        </nav>
+    </footer>
+
     <script src="script.js"></script>
+    <script>
+// Seleccionamos todos los botones del aside
+const buttons = document.querySelectorAll('.category-btn');
+
+// Seleccionamos todas las secciones del main
+const sections = document.querySelectorAll('.content-section');
+
+// Recorremos cada botón
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    
+    // 1. Quitamos la clase "active" de todos los botones
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // 2. Le ponemos "active" al botón que se acaba de pulsar
+    button.classList.add('active');
+    
+    // 3. Obtenemos el valor del data-section (lab, proyectos o gia)
+    const sectionId = button.dataset.section;
+    
+    // 4. Quitamos "active" de todas las secciones
+    sections.forEach(section => section.classList.remove('active'));
+    
+    // 5. Activamos solo la sección que corresponde
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.classList.add('active');
+    }
+  });
+});
+    </script>
 </body>
 </html>

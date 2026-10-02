@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VT323 SYSTEM — LAV</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0A0A0A;
+      font-family: 'Courier New', Courier, monospace;
+      color: #A0A0A0;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* Canvas Matrix */
+    #matrixCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    main {
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .pixel-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(9, 1fr);
+      gap: 0.4rem;
+    }
+
+    /* Posiciones de los paneles */
+    .article_1 { grid-column: 5 / span 3; grid-row: 1; }
+    .article_2 { grid-column: 2 / span 2; grid-row: 6 / span 3; }
+    .article_3 { grid-column: 1 / span 2; grid-row: 4 / span 2; }
+    .article_4 { grid-column: 3 / span 5; grid-row: 2 / span 6; }
+    .article_5 { grid-column: 7 / span 2; grid-row: 5 / span 2; }
+    .article_6 { grid-column: 4 / span 4; grid-row: 8 / span 2; }
+    .article_7 { grid-column: 2 / span 1; grid-row: 3; }
+    .article_8 { grid-column: 3 / span 1; grid-row: 3; }
+    .article_9 { grid-column: 8 / span 2; grid-row: 3 / span 6; }
+
+    /* Paneles */
+    .panel {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96);
+      transition: all 0.35s ease;
+    }
+    .panel.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .window {
+      width: 100%;
+      height: 100%;
+      background: #111;
+      border: 1px solid #1A1A1A;
+      border-radius: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .window-bar {
+      padding: 0.35rem 0.6rem;
+      background: #0A0A0A;
+      border-bottom: 1px solid #1A1A1A;
+      color: #666;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .window-content {
+      padding: 0.5rem 0.7rem;
+      flex: 1;
+      overflow: hidden;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .blink {
+      color: #4A9EFF;
+      animation: blink 1.1s steps(2) infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+    }
+    .center-content h1 {
+      font-size: 3.2rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: #A0A0A0;
+      margin-top: 0.3rem;
+    }
+    .center-content p {
+      font-size: 0.75rem;
+      color: #666;
+      letter-spacing: 0.1em;
+    }
+
+    /* Mapa */
+    .map {
+      position: relative;
+      background: #0D0D0D;
+      background-image: 
+        linear-gradient(#1A1A1A 1px, transparent 1px),
+        linear-gradient(90deg, #1A1A1A 1px, transparent 1px);
+      background-size: 12px 12px;
+    }
+
+    #player, .player-body {
+      width: 11px;
+      height: 11px;
+      background: #4A9EFF;
+      position: absolute;
+      z-index: 10;
+      border-radius: 1px;
+      box-shadow: 0 0 6px rgba(74, 158, 255, 0.4);
+    }
+
+    .glyph {
+      width: 9px;
+      height: 9px;
+      background: #A0A0A0;
+      position: absolute;
+      border-radius: 1px;
+      box-shadow: 0 0 4px rgba(160, 160, 160, 0.3);
+    }
+    .glyph.taken { display: none; }
+
+    /* Log */
+    .log .window-content {
+      font-size: 0.7rem;
+      overflow-y: auto;
+    }
+    .log p {
+      margin-bottom: 0.25rem;
+      color: #666;
+    }
+
+    /* Crash / Win */
+    .map.crash {
+      animation: crashFlash 0.3s steps(2) infinite;
+    }
+    @keyframes crashFlash {
+      0%, 100% { background-color: #0D0D0D; }
+      50% { background-color: #2a0a0a; }
+    }
+
+    .map.win {
+      animation: winFlash 0.4s steps(2) infinite;
+    }
+    @keyframes winFlash {
+      0%, 100% { background-color: #0D0D0D; }
+      50% { background-color: #0a1f0a; }
+    }
+
+    /* Alarm Overlay */
+    .alarm-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: rgba(10, 10, 10, 0.92);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+    }
+    .alarm-overlay.show { display: flex; }
+
+    .alarm-text {
+      color: #ff4a4a;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      animation: blink 0.5s steps(2) infinite;
+    }
+    .alarm-text.win-text {
+      color: #4A9EFF;
+      text-shadow: 0 0 8px rgba(74, 158, 255, 0.5);
+    }
+
+    #restartBtn {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      color: #A0A0A0;
+      border: 1px solid #1A1A1A;
+      padding: 0.5rem 1.2rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #restartBtn:hover {
+      border-color: #4A9EFF;
+      color: #4A9EFF;
+    }
+
+    /* Controles táctiles */
+    .touch-controls {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .t-row {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .t-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid #1A1A1A;
+      color: #A0A0A0;
+      font-size: 1.1rem;
+      font-family: 'Courier New', Courier, monospace;
+      cursor: pointer;
+      border-radius: 0.3rem;
+    }
+    .t-btn:active {
+      background: #4A9EFF;
+      color: #0A0A0A;
+      border-color: #4A9EFF;
+    }
+
+    @media (max-width: 900px) {
+      .touch-controls { display: flex; }
+      main { padding: 0.8rem; }
+      .center-content h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="matrixCanvas"></canvas>
+
+<main>
+  <section class="pixel-grid">
+
+    <article class="article_7 panel">
+      <div class="window">
+        <div class="window-bar">DISTRIBUCIÓN</div>
+        <div class="window-content">Google Fonts</div>
+      </div>
+    </article>
+
+    <article class="article_9 panel">
+      <div class="window">
+        <div class="window-bar">ABOUT</div>
+        <div class="window-content">Inspirada en terminales VT (1970–80)</div>
+      </div>
+    </article>
+
+    <article class="article_1 panel">
+      <div class="window">
+        <div class="window-bar">
+          <span>CARACTERÍSTICAS</span>
+          <span>X</span>
+        </div>
+        <div class="window-content">
+          Sans-serif · Monoespaciada
+        </div>
+      </div>
+    </article>
+
+    <article class="article_4 panel">
+      <div class="window">
+        <div class="window-bar">
+          <span class="blink">VT323 SYSTEM</span>
+          <span id="highScoreDisplay">RECORD: 0</span>
+        </div>
+        <div class="window-content center-content">
+          <p>PIXEL DISPLAY TYPEFACE</p>
+          <h1>VT323</h1>
+        </div>
+      </div>
+    </article>
+
+    <article class="article_2 panel active">
+      <div class="window">
+        <div class="window-bar">
+          <span>MAPA</span>
+          <span>X</span>
+        </div>
+        <div class="window-content map" id="mapa">
+          <div id="player"></div>
+
+          <div class="glyph" data-info="DISPLAY PRINCIPAL CARGADO"></div>
+          <div class="glyph" data-info="CARACTERÍSTICAS ANALIZADAS"></div>
+          <div class="glyph" data-info="STATS TIPOGRÁFICOS DETECTADOS"></div>
+          <div class="glyph" data-info="VARIANTS DISPONIBLES"></div>
+          <div class="glyph" data-info="SYSTEM LOG ACTIVADO"></div>
+          <div class="glyph" data-info="DISTRIBUCIÓN: GOOGLE FONTS"></div>
+          <div class="glyph" data-info="AUTOR: PETER HULL"></div>
+          <div class="glyph" data-info="AÑO DE LANZAMIENTO: 2013"></div>
+          <div class="glyph" data-info="INSPIRADA EN EL DEC VT220"></div>
+          <div class="glyph" data-info="1 SOLO PESO: REGULAR"></div>
+          <div class="glyph" data-info="LICENCIA: OPEN FONT LICENSE"></div>
+          <div class="glyph" data-info="USO IDEAL: UI RETRO Y CRT"></div>
+
+          <div class="alarm-overlay" id="alarmOverlay">
+            <p class="alarm-text" id="alarmTitle">⚠ COLISIÓN DETECTADA ⚠</p>
+            <button id="restartBtn">REINICIAR SISTEMA</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="article_8 panel">
+      <div class="window">
+        <div class="window-bar">AUTOR</div>
+        <div class="window-content">Peter Hull</div>
+      </div>
+    </article>
+
+    <article class="article_5 panel active">
+      <div class="window">
+        <div class="window-bar">
+          <span>SYSTEM</span>
+          <span>X</span>
+        </div>
+        <div class="window-content" id="infoText">
+          ▶ SISTEMA APAGADO<br>▶ USA LAS FLECHAS
+        </div>
+      </div>
+    </article>
+
+    <article class="article_6 panel log">
+      <div class="window">
+        <div class="window-bar">SYSTEM LOG</div>
+        <div class="window-content" id="log"></div>
+      </div>
+    </article>
+
+    <article class="article_3 panel">
+      <div class="window">
+        <div class="window-bar">STATS</div>
+        <div class="window-content">Regular · CRT · UI</div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- Controles táctiles -->
+  <div class="touch-controls">
+    <button class="t-btn" id="btnUp">▲</button>
+    <div class="t-row">
+      <button class="t-btn" id="btnLeft">◀</button>
+      <button class="t-btn" id="btnRight">▶</button>
+    </div>
+    <button class="t-btn" id="btnDown">▼</button>
+  </div>
+</main>
+
+<script>
+  // ===== MATRIX BACKGROUND =====
+  const canvas = document.getElementById("matrixCanvas");
+  const ctx = canvas.getContext("2d");
+
+  function resizeMatrix() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeMatrix);
+  resizeMatrix();
+
+  const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/-_VT323*#";
+  const fontSize = 14;
+  let columns = canvas.width / fontSize;
+  let drops = Array.from({ length: columns }, () => 1);
+
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(10, 10, 10, 0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#4A4A4A";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  setInterval(drawMatrix, 55);
+
+  // ===== AUDIO =====
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function playSound(type) {
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    const now = audioCtx.currentTime;
+
+    if (type === "pickup") {
+      osc.type = "square";
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.1);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+      osc.start(now); osc.stop(now + 0.18);
+    } else if (type === "move") {
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(140, now);
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
+      osc.start(now); osc.stop(now + 0.04);
+    } else if (type === "start") {
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(720, now + 0.25);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.25);
+      osc.start(now); osc.stop(now + 0.25);
+    } else if (type === "alarm") {
+      osc.type = "square";
+      osc.frequency.setValueAtTime(620, now);
+      osc.frequency.setValueAtTime(420, now + 0.1);
+      osc.frequency.setValueAtTime(620, now + 0.2);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+      osc.start(now); osc.stop(now + 0.35);
+    } else if (type === "win") {
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.setValueAtTime(554, now + 0.12);
+      osc.frequency.setValueAtTime(659, now + 0.24);
+      osc.frequency.setValueAtTime(880, now + 0.36);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
+      osc.start(now); osc.stop(now + 0.7);
+    }
+  }
+
+  // ===== JUEGO =====
+  const playerElement = document.getElementById("player");
+  const glyphs = document.querySelectorAll(".glyph");
+  const logBox = document.getElementById("log");
+  const infoText = document.getElementById("infoText");
+  const mapa = document.getElementById("mapa");
+  const alarmOverlay = document.getElementById("alarmOverlay");
+  const alarmTitle = document.getElementById("alarmTitle");
+  const restartBtn = document.getElementById("restartBtn");
+  const highScoreDisplay = document.getElementById("highScoreDisplay");
+
+  const step = 5;
+  const LIMIT_MIN = 0;
+  const LIMIT_MAX = 90;
+
+  let cuerpoPosiciones = [{ x: 40, y: 40 }];
+  let cuerpoDivs = [playerElement];
+  let collected = 0;
+  let gameOver = false;
+  let animId = null;
+  let gameInterval = null;
+  let dirX = 0, dirY = 0;
+  let gameStarted = false;
+  const totalGlyphs = glyphs.length;
+
+  let highScore = localStorage.getItem("vt323_highscore") || 0;
+  highScoreDisplay.textContent = `RECORD: ${highScore}`;
+
+  const panels = [
+    document.querySelector(".article_4"),
+    document.querySelector(".article_1"),
+    document.querySelector(".article_3"),
+    document.querySelector(".article_9"),
+    document.querySelector(".article_6"),
+    document.querySelector(".article_7"),
+    document.querySelector(".article_8")
+  ];
+
+  let itemsData = [];
+  glyphs.forEach(g => {
+    const x = Math.random() * 80;
+    const y = Math.random() * 80;
+    g.style.left = x + "%";
+    g.style.top = y + "%";
+    itemsData.push({
+      el: g, x, y,
+      vx: (Math.random() - 0.5) * 1.1,
+      vy: (Math.random() - 0.5) * 1.1
+    });
+  });
+
+  function moveItems() {
+    itemsData.forEach(item => {
+      if (item.el.classList.contains("taken")) return;
+      item.x += item.vx;
+      item.y += item.vy;
+      if (item.x <= 0 || item.x >= 94) item.vx *= -1;
+      if (item.y <= 0 || item.y >= 94) item.vy *= -1;
+      item.el.style.left = item.x + "%";
+      item.el.style.top = item.y + "%";
+    });
+    animId = requestAnimationFrame(moveItems);
+  }
+
+  function actualizarVisual() {
+    cuerpoPosiciones.forEach((pos, i) => {
+      cuerpoDivs[i].style.left = pos.x + "%";
+      cuerpoDivs[i].style.top = pos.y + "%";
+    });
+  }
+
+  function añadirSegmento() {
+    const seg = document.createElement("div");
+    seg.className = "player-body";
+    mapa.appendChild(seg);
+    cuerpoDivs.push(seg);
+    cuerpoPosiciones.push({ ...cuerpoPosiciones[cuerpoPosiciones.length - 1] });
+  }
+
+  function logEvent(text) {
+    const p = document.createElement("p");
+    p.textContent = "> " + text;
+    logBox.appendChild(p);
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+
+  function triggerCrash(reason = "ALERTA: CONTACTO CON EL LÍMITE") {
+    if (gameOver) return;
+    gameOver = true;
+    clearInterval(gameInterval);
+    playSound("alarm");
+    mapa.classList.add("crash");
+    alarmTitle.textContent = "⚠ COLISIÓN DETECTADA ⚠";
+    alarmTitle.classList.remove("win-text");
+    alarmOverlay.classList.add("show");
+    infoText.innerHTML = "▶ COLISIÓN DETECTADA<br>▶ SISTEMA BLOQUEADO";
+    logEvent(reason);
+  }
+
+  function triggerWin() {
+    if (gameOver) return;
+    gameOver = true;
+    clearInterval(gameInterval);
+    playSound("win");
+    mapa.classList.add("win");
+    alarmTitle.textContent = "✔ SISTEMA DESBLOQUEADO ✔";
+    alarmTitle.classList.add("win-text");
+    alarmOverlay.classList.add("show");
+    infoText.innerHTML = "▶ ACCESO CONCEDIDO<br>▶ NÚCLEO OPTIMIZADO";
+    logEvent("SISTEMA DESBLOQUEADO EXITOSAMENTE");
+
+    if (collected > highScore) {
+      highScore = collected;
+      localStorage.setItem("vt323_highscore", highScore);
+      highScoreDisplay.textContent = `RECORD: ${highScore}`;
+    }
+  }
+
+  function resetGame() {
+    clearInterval(gameInterval);
+    cuerpoDivs.slice(1).forEach(d => d.remove());
+    cuerpoDivs = [playerElement];
+    cuerpoPosiciones = [{ x: 40, y: 40 }];
+    collected = 0;
+    gameOver = false;
+    gameStarted = false;
+    dirX = 0; dirY = 0;
+    actualizarVisual();
+
+    itemsData.forEach(item => {
+      item.el.classList.remove("taken");
+      item.x = Math.random() * 80;
+      item.y = Math.random() * 80;
+    });
+
+    panels.forEach(p => p.classList.remove("active"));
+    document.querySelector(".article_2").classList.add("active");
+    document.querySelector(".article_5").classList.add("active");
+    document.querySelector(".article_4").classList.add("active");
+
+    mapa.classList.remove("crash", "win");
+    alarmOverlay.classList.remove("show");
+    infoText.innerHTML = "▶ SISTEMA APAGADO<br>▶ USA LAS FLECHAS";
+    logBox.innerHTML = "";
+    logEvent("SISTEMA REINICIADO");
+    if (!animId) moveItems();
+  }
+
+  restartBtn.addEventListener("click", resetGame);
+
+  function gameLoop() {
+    if (gameOver || !gameStarted) return;
+
+    const copia = cuerpoPosiciones.map(p => ({ ...p }));
+    let nx = cuerpoPosiciones[0].x + dirX;
+    let ny = cuerpoPosiciones[0].y + dirY;
+
+    if (nx < LIMIT_MIN || nx > LIMIT_MAX || ny < LIMIT_MIN || ny > LIMIT_MAX) {
+      cuerpoPosiciones[0].x = Math.max(LIMIT_MIN, Math.min(LIMIT_MAX, nx));
+      cuerpoPosiciones[0].y = Math.max(LIMIT_MIN, Math.min(LIMIT_MAX, ny));
+      actualizarVisual();
+      triggerCrash("ALERTA: CONTACTO CON EL LÍMITE DEL MAPA");
+      return;
+    }
+
+    cuerpoPosiciones[0].x = nx;
+    cuerpoPosiciones[0].y = ny;
+    for (let i = 1; i < cuerpoPosiciones.length; i++) {
+      cuerpoPosiciones[i] = copia[i - 1];
+    }
+    actualizarVisual();
+
+    itemsData.forEach(item => {
+      if (item.el.classList.contains("taken")) return;
+      const dx = Math.abs(item.x - cuerpoPosiciones[0].x);
+      const dy = Math.abs(item.y - cuerpoPosiciones[0].y);
+      if (dx < 7 && dy < 7) {
+        item.el.classList.add("taken");
+        playSound("pickup");
+        collected++;
+        añadirSegmento();
+        if (panels[collected - 1]) panels[collected - 1].classList.add("active");
+        infoText.textContent = item.el.dataset.info;
+        logEvent("DATO [" + collected + "/" + totalGlyphs + "]: " + item.el.dataset.info);
+        if (collected === totalGlyphs) triggerWin();
+      }
+    });
+  }
+
+  function changeDirection(nx, ny) {
+    if (gameOver) return;
+    if (!gameStarted) {
+      gameStarted = true;
+      playSound("start");
+      infoText.innerHTML = "▶ SISTEMA ONLINE<br>▶ CAPTURA DATOS";
+      gameInterval = setInterval(gameLoop, 120);
+    }
+    if (nx !== 0 && dirX === 0) { dirX = nx; dirY = 0; playSound("move"); }
+    else if (ny !== 0 && dirY === 0) { dirX = 0; dirY = ny; playSound("move"); }
+  }
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp")    { e.preventDefault(); changeDirection(0, -step); }
+    if (e.key === "ArrowDown")  { e.preventDefault(); changeDirection(0, step); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); changeDirection(-step, 0); }
+    if (e.key === "ArrowRight") { e.preventDefault(); changeDirection(step, 0); }
+  });
+
+  document.getElementById("btnUp").addEventListener("click", () => changeDirection(0, -step));
+  document.getElementById("btnDown").addEventListener("click", () => changeDirection(0, step));
+  document.getElementById("btnLeft").addEventListener("click", () => changeDirection(-step, 0));
+  document.getElementById("btnRight").addEventListener("click", () => changeDirection(step, 0));
+
+  moveItems();
+</script>
+</body>
+</html>
