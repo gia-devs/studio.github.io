@@ -63,6 +63,9 @@ header nav ul {
     list-style-type: none;
 }
 @media (max-width: 768px) {
+    header {
+        padding: 0em 1em;
+    }
     header ul {
         display: flex; /* flex */
         align-items: center;
@@ -132,7 +135,11 @@ footer nav ul {
     justify-content: space-between;
     list-style-type: none;
 }
-
+@media (max-width: 768px) {
+    footer {
+        padding: 0em 1em;
+    }
+}
 
 /* Botón para abrir el menú (oculto en escritorio) */
 .menu-toggle {
