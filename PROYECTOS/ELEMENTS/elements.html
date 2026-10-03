@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles-fonts.css">
+    <link rel="stylesheet" href="/PROYECTOS/ELEMENTS/elements.css">
+</head>
+<body>
+<main>
+<section>
+
+<!-- input text -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"nombre"</span>&gt;Nombre:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"text"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"nombre"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"nombre"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"Escribe tu nombre"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="text">
+    </div>
+</article>
+
+<!-- input email -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"email"</span>&gt;Email:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"email"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"email"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"email"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"tu@email.com"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">required</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+    </div>
+</article>
+
+<!-- input password -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"password"</span>&gt;Contraseña:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"password"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"password"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"password"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"••••••••"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" placeholder="••••••••">
+    </div>
+</article>
+
+<!-- input number -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"edad"</span>&gt;Edad:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"number"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"edad"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"edad"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">min</span>=<span class="valor">"1"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">max</span>=<span class="valor">"120"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"18"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="1" max="120" value="18">
+    </div>
+</article>
+
+<!-- input tel -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"telefono"</span>&gt;Teléfono:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"tel"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"telefono"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"telefono"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"+54 11 1234-5678"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+54 11 1234-5678">
+    </div>
+</article>
+
+<!-- input url -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"web"</span>&gt;Sitio web:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"url"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"web"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"web"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"https://ejemplo.com"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="web">Sitio web:</label>
+        <input type="url" id="web" name="web" placeholder="https://ejemplo.com">
+    </div>
+</article>
+
+<!-- input search -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"buscar"</span>&gt;Buscar:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"search"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"buscar"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"buscar"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">placeholder</span>=<span class="valor">"Buscar..."</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="buscar">Buscar:</label>
+        <input type="search" id="buscar" name="buscar" placeholder="Buscar...">
+    </div>
+</article>
+
+<!-- input date -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"fecha"</span>&gt;Fecha:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"date"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"fecha"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"fecha"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha">
+    </div>
+</article>
+
+<!-- input time -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"hora"</span>&gt;Hora:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"time"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"hora"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"hora"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora">
+    </div>
+</article>
+
+<!-- input checkbox -->
+<article>
+    <code>
+        &lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"checkbox"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"acepto"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"acepto"</span>&gt;
+        <br>&lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"acepto"</span>&gt;Acepto los términos&lt;/<span class="elemento">label</span>&gt;
+    </code>
+    <div class="demo">
+        <input type="checkbox" id="acepto" name="acepto">
+        <label for="acepto">Acepto los términos</label>
+    </div>
+</article>
+
+<!-- input radio -->
+<article>
+    <code>
+        &lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"radio"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"opcion1"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"opcion"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"1"</span>&gt;
+        <br>&lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"opcion1"</span>&gt;Opción 1&lt;/<span class="elemento">label</span>&gt;
+        <br><br>
+        &lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"radio"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"opcion2"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"opcion"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"2"</span>&gt;
+        <br>&lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"opcion2"</span>&gt;Opción 2&lt;/<span class="elemento">label</span>&gt;
+    </code>
+    <div class="demo">
+        <input type="radio" id="opcion1" name="opcion" value="1">
+        <label for="opcion1">Opción 1</label><br>
+        <input type="radio" id="opcion2" name="opcion" value="2">
+        <label for="opcion2">Opción 2</label>
+    </div>
+</article>
+
+<!-- input file -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"archivo"</span>&gt;Subir archivo:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"file"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"archivo"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"archivo"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">accept</span>=<span class="valor">"image/*"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="archivo">Subir archivo:</label>
+        <input type="file" id="archivo" name="archivo" accept="image/*">
+    </div>
+</article>
+
+<!-- input range -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"volumen"</span>&gt;Volumen:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"range"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"volumen"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"volumen"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">min</span>=<span class="valor">"0"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">max</span>=<span class="valor">"100"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"50"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="volumen">Volumen:</label>
+        <input type="range" id="volumen" name="volumen" min="0" max="100" value="50">
+    </div>
+</article>
+
+<!-- input color -->
+<article>
+    <code>
+        &lt;<span class="elemento">label</span> <span class="atributo">for</span>=<span class="valor">"color"</span>&gt;Color:&lt;/<span class="elemento">label</span>&gt;
+        <br>&lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"color"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">id</span>=<span class="valor">"color"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">name</span>=<span class="valor">"color"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"#4f46e5"</span>&gt;
+    </code>
+    <div class="demo">
+        <label for="color">Color:</label>
+        <input type="color" id="color" name="color" value="#4f46e5">
+    </div>
+</article>
+
+<!-- input submit -->
+<article>
+    <code>
+        &lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"submit"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"Enviar"</span>&gt;
+    </code>
+    <div class="demo">
+        <input type="submit" value="Enviar">
+    </div>
+</article>
+
+<!-- input reset -->
+<article>
+    <code>
+        &lt;<span class="elemento">input</span>
+        <br>&nbsp;&nbsp;<span class="atributo">type</span>=<span class="valor">"reset"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">value</span>=<span class="valor">"Limpiar"</span>&gt;
+    </code>
+    <div class="demo">
+        <input type="reset" value="Limpiar">
+    </div>
+</article>
+
+<!-- enlace (a) -->
+<article>
+    <code>
+        &lt;<span class="elemento">a</span>
+        <br>&nbsp;&nbsp;<span class="atributo">href</span>=<span class="valor">"https://ejemplo.com"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">target</span>=<span class="valor">"_blank"</span>
+        <br>&nbsp;&nbsp;<span class="atributo">rel</span>=<span class="valor">"noopener noreferrer"</span>&gt;
+        <br>&nbsp;&nbsp;Visitar sitio
+        <br>&lt;/<span class="elemento">a</span>&gt;
+        <br><br>
+        &lt;<span class="elemento">a</span> <span class="atributo">href</span>=<span class="valor">"#seccion"</span>&gt;Ir a una sección&lt;/<span class="elemento">a</span>&gt;
+        <br><br>
+        &lt;<span class="elemento">a</span> <span class="atributo">href</span>=<span class="valor">"mailto:hola@ejemplo.com"</span>&gt;Enviar correo&lt;/<span class="elemento">a</span>&gt;
+    </code>
+    <div class="demo demo-enlace">
+        <p><a href="https://www.wikipedia.org" target="_blank" rel="noopener noreferrer">Visitar Wikipedia</a></p>
+        <p><a href="#seccion">Ir a una sección</a></p>
+        <p><a href="mailto:hola@ejemplo.com">Enviar correo</a></p>
+    </div>
+</article>
+
+<!-- listas ul / ol -->
+<article>
+    <code>
+        &lt;<span class="elemento">ul</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Elemento uno&lt;/<span class="elemento">li</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Elemento dos&lt;/<span class="elemento">li</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Elemento tres&lt;/<span class="elemento">li</span>&gt;
+        <br>&lt;/<span class="elemento">ul</span>&gt;
+        <br><br>
+        &lt;<span class="elemento">ol</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Primer paso&lt;/<span class="elemento">li</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Segundo paso&lt;/<span class="elemento">li</span>&gt;
+        <br>&nbsp;&nbsp;&lt;<span class="elemento">li</span>&gt;Tercer paso&lt;/<span class="elemento">li</span>&gt;
+        <br>&lt;/<span class="elemento">ol</span>&gt;
+    </code>
+    <div class="demo demo-listas">
+        <ul>
+            <li>Elemento uno</li>
+            <li>Elemento dos</li>
+            <li>Elemento tres</li>
+        </ul>
+        <ol>
+            <li>Primer paso</li>
+            <li>Segundo paso</li>
+            <li>Tercer paso</li>
+        </ol>
+    </div>
+</article>
+
+        <!-- figure / img / figcaption -->
+        <article>
+            <code>
+                &lt;<span class="elemento">figure</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">img</span>
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="atributo">src</span>=<span class="valor">"imagen.jpg"</span>
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="atributo">alt</span>=<span class="valor">"Descripción de la imagen"</span>
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="atributo">loading</span>=<span class="valor">"lazy"</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">figcaption</span>&gt;Pie de foto descriptivo&lt;/<span class="elemento">figcaption</span>&gt;
+                <br>&lt;/<span class="elemento">figure</span>&gt;
+            </code>
+            <div class="demo demo-figure">
+                <figure>
+                    <img 
+                        src="https://picsum.photos/600/400" 
+                        alt="Descripción de la imagen" 
+                        loading="lazy">
+                    <figcaption>Pie de foto descriptivo</figcaption>
+                </figure>
+            </div>
+        </article>
+
+        <!-- iframe -->
+        <article>
+            <code>
+                &lt;<span class="elemento">iframe</span>
+                <br>&nbsp;&nbsp;<span class="atributo">src</span>=<span class="valor">"https://www.wikipedia.org"</span>
+                <br>&nbsp;&nbsp;<span class="atributo">title</span>=<span class="valor">"Contenido externo"</span>
+                <br>&nbsp;&nbsp;<span class="atributo">loading</span>=<span class="valor">"lazy"</span>
+                <br>&nbsp;&nbsp;<span class="atributo">sandbox</span>=<span class="valor">"allow-scripts allow-same-origin"</span>&gt;
+                <br>&lt;/<span class="elemento">iframe</span>&gt;
+            </code>
+            <div class="demo demo-iframe">
+                <iframe 
+                    src="https://www.wikipedia.org" 
+                    title="Contenido externo" 
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin">
+                </iframe>
+            </div>
+        </article>
+
+        <!-- details / summary -->
+        <article>
+            <code>
+                &lt;<span class="elemento">details</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">summary</span>&gt;¿Qué es el devenir?&lt;/<span class="elemento">summary</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">p</span>&gt;Todo está en cambio constante.&lt;/<span class="elemento">p</span>&gt;
+                <br>&lt;/<span class="elemento">details</span>&gt;
+                <br><br>
+                &lt;<span class="elemento">details</span> <span class="atributo">open</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">summary</span>&gt;Abierto al inicio&lt;/<span class="elemento">summary</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">p</span>&gt;Se muestra con el atributo open.&lt;/<span class="elemento">p</span>&gt;
+                <br>&lt;/<span class="elemento">details</span>&gt;
+            </code>
+            <div class="demo demo-details">
+                <details>
+                    <summary>¿Qué es el devenir?</summary>
+                    <p>Todo está en cambio constante.</p>
+                </details>
+                <details open>
+                    <summary>Abierto al inicio</summary>
+                    <p>Se muestra con el atributo open.</p>
+                </details>
+            </div>
+        </article>
+
+        <!-- div / span -->
+        <article>
+            <code>
+                &lt;<span class="elemento">div</span>&gt;Primer bloque&lt;/<span class="elemento">div</span>&gt;
+                <br>&lt;<span class="elemento">div</span>&gt;Segundo bloque&lt;/<span class="elemento">div</span>&gt;
+                <br><br>
+                &lt;<span class="elemento">p</span>&gt;Texto con 
+                &lt;<span class="elemento">span</span>&gt;una parte&lt;/<span class="elemento">span</span>&gt; 
+                y &lt;<span class="elemento">span</span>&gt;otra&lt;/<span class="elemento">span</span>&gt;.&lt;/<span class="elemento">p</span>&gt;
+            </code>
+            <div class="demo demo-grupo">
+                <div>Primer bloque</div>
+                <div>Segundo bloque</div>
+                <p>Texto con <span>una parte</span> y <span>otra</span>.</p>
+            </div>
+        </article>
+
+        <!-- br / hr -->
+        <article>
+            <code>
+                &lt;<span class="elemento">p</span>&gt;Todo fluye,&lt;<span class="elemento">br</span>&gt;nada permanece.&lt;/<span class="elemento">p</span>&gt;
+                <br><br>
+                &lt;<span class="elemento">hr</span>&gt;
+                <br><br>
+                &lt;<span class="elemento">p</span>&gt;Otro tema, otro párrafo.&lt;/<span class="elemento">p</span>&gt;
+            </code>
+            <div class="demo">
+                <p>Todo fluye,<br>nada permanece.</p>
+                <hr>
+                <p>Otro tema, otro párrafo.</p>
+            </div>
+        </article>
+
+        <!-- code / pre -->
+        <article>
+            <code>
+                &lt;<span class="elemento">p</span>&gt;Usa &lt;<span class="elemento">code</span>&gt;console.log()&lt;/<span class="elemento">code</span>&gt;&lt;/<span class="elemento">p</span>&gt;
+                <br><br>
+                &lt;<span class="elemento">pre</span>&gt;&lt;<span class="elemento">code</span>&gt;function saludar() {
+                <br>&nbsp;&nbsp;return "hola";
+                <br>}&lt;/<span class="elemento">code</span>&gt;&lt;/<span class="elemento">pre</span>&gt;
+            </code>
+            <div class="demo">
+                <p>Usa <code>console.log()</code></p>
+                <pre><code>function saludar() {
+  return "hola";
+}</code></pre>
+            </div>
+        </article>
+
+        <!-- headings -->
+        <article>
+            <code>
+                &lt;<span class="elemento">h1</span>&gt;Título principal&lt;/<span class="elemento">h1</span>&gt;
+                <br>&lt;<span class="elemento">h2</span>&gt;Subtítulo&lt;/<span class="elemento">h2</span>&gt;
+                <br>&lt;<span class="elemento">h3</span>&gt;Sección&lt;/<span class="elemento">h3</span>&gt;
+                <br>&lt;<span class="elemento">h4</span>&gt;Subsección&lt;/<span class="elemento">h4</span>&gt;
+                <br>&lt;<span class="elemento">h5</span>&gt;Nivel 5&lt;/<span class="elemento">h5</span>&gt;
+                <br>&lt;<span class="elemento">h6</span>&gt;Nivel 6&lt;/<span class="elemento">h6</span>&gt;
+            </code>
+            <div class="demo">
+                <h1>Título principal</h1>
+                <h2>Subtítulo</h2>
+                <h3>Sección</h3>
+                <h4>Subsección</h4>
+                <h5>Nivel 5</h5>
+                <h6>Nivel 6</h6>
+            </div>
+        </article>
+
+        <!-- strong / em / mark -->
+        <article>
+            <code>
+                &lt;<span class="elemento">p</span>&gt;
+                Un párrafo puede incluir 
+                &lt;<span class="elemento">strong</span>&gt;importante&lt;/<span class="elemento">strong</span>&gt;,
+                &lt;<span class="elemento">em</span>&gt;énfasis&lt;/<span class="elemento">em</span>&gt; y
+                &lt;<span class="elemento">mark</span>&gt;resaltado&lt;/<span class="elemento">mark</span>&gt;.
+                &lt;/<span class="elemento">p</span>&gt;
+            </code>
+            <div class="demo">
+                <p>
+                    Un párrafo puede incluir 
+                    <strong>importante</strong>, 
+                    <em>énfasis</em> y 
+                    <mark>resaltado</mark>.
+                </p>
+            </div>
+        </article>
+
+        <!-- blockquote -->
+        <article>
+            <code>
+                &lt;<span class="elemento">blockquote</span>&gt;
+                <br>&nbsp;&nbsp;Nadie se baña dos veces en el mismo río.
+                <br>&nbsp;&nbsp;&lt;<span class="elemento">cite</span>&gt;— Fragmentos&lt;/<span class="elemento">cite</span>&gt;
+                <br>&lt;/<span class="elemento">blockquote</span>&gt;
+            </code>
+            <div class="demo">
+                <blockquote>
+                    Nadie se baña dos veces en el mismo río.
+                    <cite>— Fragmentos</cite>
+                </blockquote>
+            </div>
+        </article>
+
+    </section>
+</main>
+</body>
+</html>

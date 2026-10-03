@@ -145,7 +145,7 @@ aside nav ul {
     height: 100%;
     list-style-type: none;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -251,7 +251,6 @@ footer nav ul {
     }
 
     aside nav ul {
-        align-items: flex-start;
         justify-content: center;
         gap: 1.5em;
     }
