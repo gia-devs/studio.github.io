@@ -209,12 +209,12 @@ section:nth-child(1) {
     height: 100vh;
     padding: 2em;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    align-items: end;
+    justify-content: start;
 }
 section:nth-child(1) div blockquote {
     border: none;
+    padding: 0;
 }
 section:nth-child(1) > div {
     max-width: 50rem;
@@ -251,6 +251,9 @@ section:nth-child(1) .hero__question {
     }
     section:nth-child(1) > div {
         padding: 1em;
+    }
+    section:nth-child(1) div cite {
+    display: inline;
     }
 }
 
