@@ -1,0 +1,19 @@
+* {
+    padding: 0; margin: 0; box-sizing: border-box;
+}
+body {
+    font-family: "Roboto";
+    background: #0A0A0A;
+    color: #A0A0A0;
+}
+main {
+    width: 100%;
+    height: 100vh;
+}
+img {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    object-fit: contain;    /* ← Muestra toda la imagen */
+    object-position: center;
+}

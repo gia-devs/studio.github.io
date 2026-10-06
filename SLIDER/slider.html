@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slider de imágenes</title>
+  <link rel="stylesheet" href="slider.css">
+</head>
+<body>
+    <main>
+    <!-- COMPONENTE: esto es lo único que copias a otra página -->
+    <section class="gallery" aria-label="Galería de imágenes">
+
+        <div class="gallery__thumbs" role="group" aria-label="Elegir imagen">
+            <button class="gallery__thumb" type="button" aria-current="true" aria-label="Ver foto 1">
+                <img src="img/foto1-thumb.jpg" alt="" width="44" height="44">
+            </button>
+            <button class="gallery__thumb" type="button" aria-label="Ver foto 2">
+                <img src="img/foto2-thumb.jpg" alt="" width="44" height="44">
+            </button>
+            <button class="gallery__thumb" type="button" aria-label="Ver foto 3">
+                <img src="img/foto3-thumb.jpg" alt="" width="44" height="44">
+            </button>
+            <button class="gallery__thumb" type="button" aria-label="Ver foto 4">
+                <img src="img/foto4-thumb.jpg" alt="" width="44" height="44">
+            </button>
+            <button class="gallery__thumb" type="button" aria-label="Ver foto 5">
+                <img src="img/foto5-thumb.jpg" alt="" width="44" height="44">
+            </button>
+            <button class="gallery__thumb" type="button" aria-label="Ver foto 6">
+                <img src="img/foto6-thumb.jpg" alt="" width="44" height="44">
+            </button>
+        </div>
+        <div class="gallery__stage">
+            <figure class="gallery__slide is-active">
+                <img src="/A1.png" alt="Describe la foto 1" width="1600" height="900">
+            </figure>
+            <figure class="gallery__slide">
+                <img src="/A2.png" alt="Describe la foto 2" width="1600" height="900">
+            </figure>
+            <figure class="gallery__slide">
+                <img src="/A3.png" alt="Describe la foto 3" width="1600" height="900">
+            </figure>
+        </div>
+    </section>
+    </main>
+    <script src="slider.js"></script>
+</body>
+</html>
