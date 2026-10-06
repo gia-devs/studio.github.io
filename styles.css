@@ -209,13 +209,10 @@ footer nav ul {
     }
 
     header {
-        padding: 0 2em;
-    }
-    main {
-        padding: 2em;
+        padding: 0 1em;
     }
     footer {
-        padding: 0 2em;
+        padding: 0 1em;
     }
 
     /* Modal desplegable del aside centrado */
@@ -260,43 +257,3 @@ footer nav ul {
 }
 
 
-.elementos {
-    perspective: 1400px;
-    overflow: hidden;
-    padding: 4em 0;
-    text-align: center;
-}
-
-.ring {
-    position: relative;
-    width: 260px;
-    height: 390px;
-    margin: 4em auto;
-    transform-style: preserve-3d;
-    animation: giro 45s linear infinite;
-}
-
-.ring:hover { animation-play-state: paused; }
-
-.ring figure {
-    position: absolute;
-    inset: 0;
-    transform: rotateY(calc(var(--i) * 360deg / var(--n))) translateZ(340px);
-    backface-visibility: hidden;
-}
-
-.ring img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
-    mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
-}
-
-@keyframes giro {
-    to { transform: rotateY(-360deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .ring { animation: none; }
-}
