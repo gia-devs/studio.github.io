@@ -79,6 +79,26 @@ strong {
     font-weight: 500;
     color: var(--text-strong);
 }
+blockquote {
+    padding: 0 1em;
+    border-left: 2px solid var(--line-strong);
+}
+blockquote p {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text-strong);
+}
+cite {
+    display: block;
+    margin-top: 0.8em;
+    font-size: 0.7rem;
+    font-style: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888888;
+}
 
 
 /* ---------- 4. Header ---------- */
@@ -151,7 +171,8 @@ header nav a[aria-current="true"]::after {
 
 /* ---------- 5. Luz de fondo ----------
    Una sola capa fija detrás de toda la página. Al cambiar de sección,
-   el JS cambia body[data-tono] y la luz se desplaza sin cortes. */
+   el JS cambia body[data-tono] y la luz se desplaza sin cortes.
+   La luz siempre va del lado del texto, nunca detrás de una imagen. */
 @property --glow-x     { syntax: "<percentage>"; inherits: true; initial-value: 100%; }
 @property --glow-y     { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
 @property --glow-w     { syntax: "<percentage>"; inherits: true; initial-value: 60%; }
@@ -179,44 +200,48 @@ body::before {
             transparent 70%
         );
 }
-body[data-tono="flujo"]    { --glow-x: 0%;   --glow-y: 0%; }
-/* la luz siempre va del lado del texto, nunca detrás de una imagen */
-body[data-tono="opuestos"] { --glow-x: 100%; --glow-y: 0%;   --glow-w: 45%; --glow-h: 70%; }
-body[data-tono="fuego"]    { --glow-x: 100%; --glow-y: 100%; --glow-w: 55%; --glow-h: 80%;
-                            --glow-color: rgba(214, 142, 92, 0.26); }
-body[data-tono="fin"]      { --glow-x: 50%;  --glow-y: 100%; --glow-color: rgba(120, 140, 185, 0.18); }
+/* azul frío para la duda, dorado para el cogito */
+body[data-tono="inicio"] { --glow-x: 100%; --glow-y: 0%;   --glow-w: 60%; --glow-h: 80%;
+                           --glow-color: rgba(120, 140, 185, 0.26); }
+body[data-tono="cogito"] { --glow-x: 100%; --glow-y: 100%; --glow-w: 55%; --glow-h: 80%;
+                           --glow-color: rgba(214, 178, 108, 0.22); }
+body[data-tono="duda"]   { --glow-x: 100%; --glow-y: 0%;   --glow-w: 45%; --glow-h: 70%;
+                           --glow-color: rgba(120, 140, 185, 0.28); }
+body[data-tono="genio"]  { --glow-x: 0%;   --glow-y: 0%;   --glow-w: 60%; --glow-h: 80%;
+                           --glow-color: rgba(120, 140, 185, 0.22); }
+body[data-tono="fin"]    { --glow-x: 50%;  --glow-y: 100%; --glow-color: rgba(120, 140, 185, 0.18); }
 
 
-/* ---------- 6. Sección 1 · Hero ---------- */
-section:nth-child(1) {
+/* ---------- 6. Hero ---------- */
+.hero {
     height: 100vh;
     padding: 2em;
     display: flex;
     align-items: end;
     justify-content: start;
 }
-section:nth-child(1) div blockquote {
-    border: none;
-    padding: 0;
-}
-section:nth-child(1) > div {
+.hero__content {
     max-width: 50rem;
     padding: 2em;
     display: flex; gap: 1em;
     flex-direction: column;
 }
-section:nth-child(1) .hero__eyebrow {
+.hero blockquote {
+    border: none;
+    padding: 0;
+}
+.hero__eyebrow {
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     color: #A0A0A0;
 }
-section:nth-child(1) h1 {
+.hero h1 {
     font-size: clamp(5rem, 15vw, 12rem);
     line-height: 0.8;
     letter-spacing: -0.04em;
     font-weight: 900;
 }
-section:nth-child(1) .hero__question {
+.hero__question {
     font-family: var(--font-serif);
     font-size: clamp(1.1rem, 2vw, 1.6rem);
     font-style: italic;
@@ -224,24 +249,65 @@ section:nth-child(1) .hero__question {
     color: var(--text-heading);
 }
 @media (max-width: 900px) {
-    section:nth-child(1) {
+    .hero {
         height: auto;
         min-height: 100svh;
         padding: 1em;
     }
-    section:nth-child(1) blockquote br {
-        display: none;
-    }
-    section:nth-child(1) > div {
+    .hero__content {
         padding: 1em;
     }
-    section:nth-child(1) div cite {
-    display: inline;
+    .hero blockquote br {
+        display: none;
+    }
+    .hero cite {
+        display: inline;
     }
 }
 
 
-section img {
+/* ---------- 7. Secciones de concepto ----------
+   .concepto            texto | imagen (imagen a la derecha)   → Genio maligno
+   .concepto--espejo    imagen | texto (imagen a la izquierda) → Cogito
+   .concepto--centro    texto | imagen | texto                 → Duda */
+.concepto {
+    height: 100vh;
+    padding: 4em;
+    display: grid; gap: 2em;
+    grid-template-columns: 1fr 440px;
+    overflow: clip;
+}
+.concepto--espejo {
+    grid-template-columns: 440px 1fr;
+}
+.concepto--centro {
+    grid-template-columns: 1fr 440px 1fr;
+}
+
+/* bloque de texto (imagen a un lado) */
+.concepto article {
+    display: flex; gap: 2em;
+    flex-direction: column;
+    justify-content: center;
+}
+.concepto article > div {
+    display: flex; gap: 1em;
+    flex-direction: column;
+}
+
+/* los dos lados de texto (imagen al centro) */
+.concepto .lado {
+    display: flex; gap: 2em;
+    flex-direction: column;
+    justify-content: center;
+}
+.concepto .lado > div {
+    display: flex; gap: 1em;
+    flex-direction: column;
+}
+
+/* imagen: sus bordes se funden con el negro de la página */
+.concepto > img {
     --fade: clamp(3rem, 7vw, 6rem);
     --mask-x: linear-gradient(to right, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
     --mask-y: linear-gradient(to bottom, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
@@ -256,147 +322,54 @@ section img {
     mask-composite: intersect;
 }
 
-blockquote {
-    padding: 0 1em;
-    border-left: 2px solid var(--line-strong);
+/* Cogito: la frase más famosa va más grande */
+#cogito blockquote p {
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    line-height: 1.25;
 }
-blockquote p {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    font-style: italic;
-    line-height: 1.4;
-    color: var(--text-strong);
-}
-cite {
-    display: block;
-    margin-top: 0.8em;
-    font-size: 0.7rem;
-    font-style: normal;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #888888;
+/* la mano queda cerca del borde izquierdo: ahí el desvanecido es menor */
+#cogito > img {
+    --mask-x: linear-gradient(to right, transparent 0, #000 1.2rem, #000 calc(100% - var(--fade)), transparent 100%);
 }
 
-
-/* ---------- 8. Sección 2 · Flujo: texto | imagen ---------- */
-section:nth-child(2) {
-    height: 100vh; 
-    padding: 4em;
-    display: grid; gap: 2em;
-    grid-template-columns: 2fr 440px;
-    overflow: clip;
-}
-section:nth-child(2) article {
-    display: grid; gap: 3em;
-    align-content: center;
-    grid-template-columns: 1fr 1fr;
-}
-section:nth-child(2) article > div {
-    display: flex; gap: 1em;
-    flex-direction: column;
-}
-section:nth-child(2) article > div:nth-child(1) {
-    grid-column: 1 / -1;
-}
 @media (max-width: 900px) {
-    section:nth-child(2) {
+    .concepto,
+    .concepto--espejo,
+    .concepto--centro {
         height: auto;
         padding: 1em;
         grid-template-columns: 1fr;
         gap: 1em;
         scroll-margin-top: 4em;
     }
-    section:nth-child(2) article {
-        padding: 1em;
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ---------- 9. Sección 3 · Opuestos: texto | imagen | texto ---------- */
-section:nth-child(3) {
-    height: 100vh;
-    padding: 4em;
-    display: grid; gap: 2em;
-    grid-template-columns: 1fr 440px 1fr;
-    overflow: clip;
-}
-section:nth-child(3) > div {                          /* los dos lados de texto */
-    display: flex; gap: 2em;
-    flex-direction: column;
-    justify-content: center;
-}
-section:nth-child(3) > div > div {
-    display: flex; gap: 1em;
-    flex-direction: column;
-}
-@media (max-width: 900px) {
-    section:nth-child(3) {
-        height: auto;
-        padding: 1em;
-        grid-template-columns: 1fr;
-        gap: 1em;
-        scroll-margin-top: 4em;
-    }
-    section:nth-child(3) > div {
+    .concepto article,
+    .concepto .lado {
         padding: 1em;
     }
 }
 
 
-/* ---------- 10. Sección 4 · Fuego: imagen | texto ---------- */
-section:nth-child(4) {
-    height: 100vh;
-    padding: 4em;
-    display: grid;
-    grid-template-columns: 440px 1fr;
-    gap: 2em;
-    overflow: clip;
-}
-section:nth-child(4) article {
-    display: flex; gap: 2em;
-    flex-direction: column;
-    justify-content: center;
-}
-section:nth-child(4) article > div {
-    display: flex; gap: 1em;
-    flex-direction: column;
-}
-@media (max-width: 900px) {
-    section:nth-child(4) {
-        height: auto;
-        padding: 1em;
-        grid-template-columns: 1fr;
-        gap: 1em;
-        scroll-margin-top: 4em;
-    }
-    section:nth-child(4) article {
-        padding: 1em;
-    }
-}
-
-
-/* ---------- 11. Sección 5 · Próximos conceptos ---------- */
-section:nth-child(5) {
+/* ---------- 8. Próximos conceptos ---------- */
+main > section[aria-label] {
     height: auto;
     padding: 2em;
     display: grid; gap: 2em;
     grid-template-columns: repeat(4, 1fr);
 }
-section:nth-child(5) > p {                            /* título: ocupa toda la fila */
+main > section[aria-label] > p {                      /* título: ocupa toda la fila */
     grid-column: 1 / -1;
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     color: var(--text-muted);
 }
-section:nth-child(5) article {
+main > section[aria-label] article {
     padding: 2em;
     display: flex; gap: 2em;
     justify-content: space-between;
     flex-direction: column;
     transition: border-color var(--ease);
 }
-section:nth-child(5) article span {
+main > section[aria-label] article span {
     font-family: "Roboto Condensed";
     font-size: clamp(2rem, 3.4vw, 3rem);
     font-weight: 300;
@@ -404,24 +377,24 @@ section:nth-child(5) article span {
     color: #A0A0A0;
     transition: color var(--ease);
 }
-section:nth-child(5) article h3 {
+main > section[aria-label] article h3 {
     font-family: "Roboto";
     font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     color: #F0F0F0;
 }
-section:nth-child(5) article p {
+main > section[aria-label] article p {
     max-width: 40ch;
 }
 @media (max-width: 900px) {
-    section:nth-child(5) {
+    main > section[aria-label] {
         padding: 1em;
         grid-template-columns: 1fr;
         gap: 1em;
         scroll-margin-top: 4em;
     }
-    section:nth-child(5) article {
+    main > section[aria-label] article {
         padding: 1em;
         gap: 1em;
         border-top: 1px solid #4A4A4A;
@@ -429,7 +402,7 @@ section:nth-child(5) article p {
 }
 
 
-/* ---------- 12. Footer ---------- */
+/* ---------- 9. Footer ---------- */
 footer {
     padding: 2em var(--gutter);
     display: grid;
@@ -474,7 +447,7 @@ footer > a:last-child {
 }
 
 
-/* ---------- 13. Animaciones ---------- */
+/* ---------- 10. Animaciones ---------- */
 @keyframes respirar {
     from { scale: 1; }
     to   { scale: 1.035; }
@@ -486,7 +459,7 @@ footer > a:last-child {
         opacity 0.9s ease var(--d, 0s),
         transform 0.9s ease var(--d, 0s);
 }
-section:nth-child(5) article.reveal {
+main > section[aria-label] article.reveal {
     transition:
         border-color var(--ease),
         opacity 0.9s ease var(--d, 0s),
@@ -498,7 +471,7 @@ section:nth-child(5) article.reveal {
 }
 
 /* Las imágenes respiran muy despacio */
-section img {
+.concepto > img {
     animation: respirar 16s ease-in-out infinite alternate;
 }
 
@@ -513,14 +486,14 @@ section img {
     }
 
     /* la imagen se desplaza un poco más lento que el texto */
-    section img {
+    .concepto > img {
         animation: respirar 16s ease-in-out infinite alternate, deriva linear both;
         animation-timeline: auto, view();
         animation-range: normal normal, cover 0% cover 100%;
     }
 
     /* el hero se disuelve al salir de la pantalla */
-    section:nth-child(1) > div {
+    .hero__content {
         animation: salida linear both;
         animation-timeline: view();
         animation-range: exit 0% exit 80%;
@@ -528,7 +501,7 @@ section img {
 }
 
 
-/* ---------- 14. Scroll (escritorio) ---------- */
+/* ---------- 11. Scroll (escritorio) ---------- */
 @media (min-width: 901px) {
     html {
         scroll-snap-type: y proximity;
@@ -542,7 +515,7 @@ section img {
 }
 
 
-/* ---------- 15. Movimiento reducido ---------- */
+/* ---------- 12. Movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
