@@ -12,7 +12,7 @@ import { ratingPanel, mountRating } from '../components/rating.js';
 export default {
   title: ({ params }) => getFigure(params.id)?.name || 'Figura',
 
-  render({ params }) {
+  render({ params, query }) {
     const f = getFigure(params.id);
     if (!f) {
       return `<div class="page page--narrow">${emptyState({
@@ -24,10 +24,15 @@ export default {
     }
     const fav = isFavorite(f.id);
     const more = similarTo(f, 4);
+    const categoryPath = f.type === 'artista' ? '/artistas' : '/filosofos';
+    const returnTo = typeof query.return === 'string' && /^\/(artistas|filosofos)(?:\?|$)/.test(query.return)
+      ? query.return
+      : categoryPath;
+    const returnLabel = f.type === 'artista' ? 'Artistas' : 'Filósofos';
 
     return `
       <div class="page detail" style="--c1:${f.c1};--c2:${f.c2}">
-        <a class="back-link" href="${f.type === 'artista' ? '#/artistas' : '#/filosofos'}">${icon('chevronLeft', { size: 18 })} ${f.type === 'artista' ? 'Artistas' : 'Filósofos'}</a>
+        <a class="back-link" href="#${esc(returnTo)}">${icon('chevronLeft', { size: 18 })} Volver a ${returnLabel}</a>
 
         <section class="detail__hero">
           <div class="detail__poster">${portrait(f)}</div>

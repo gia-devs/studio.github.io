@@ -67,6 +67,13 @@ export default {
             <input class="input" type="search" name="q" placeholder="Buscar por nombre, obra o disciplina" value="${esc(query.q || '')}" autocomplete="off">
           </label>
           <label class="field toolbar__sel">
+            <span class="field__label">Disciplina</span>
+            <select class="select" name="discipline">
+              <option value="">Todas</option>
+              ${categoryDisciplines.map((d) => `<option value="${esc(d)}" ${query.discipline === d ? 'selected' : ''}>${esc(d)}</option>`).join('')}
+            </select>
+          </label>
+          <label class="field toolbar__sel">
             <span class="field__label">Periodo</span>
             <select class="select" name="period">
               <option value="">Todos</option>
@@ -79,11 +86,6 @@ export default {
               ${SORTS.map((s) => `<option value="${s.id}" ${query.sort === s.id ? 'selected' : ''}>${s.label}</option>`).join('')}
             </select>
           </label>
-        </div>
-
-        <div class="chips genre-chips" role="group" aria-label="Filtrar por disciplina">
-          <button class="chip" type="button" data-discipline="" aria-pressed="${!query.discipline}">Todas</button>
-          ${categoryDisciplines.map((d) => `<button class="chip" type="button" data-discipline="${esc(d)}" aria-pressed="${query.discipline === d}">${esc(d)}</button>`).join('')}
         </div>
 
         <p class="results-count" data-count aria-live="polite"></p>
@@ -129,7 +131,8 @@ export default {
         });
         return;
       }
-      panel.innerHTML = `<div class="grid-movies">${list.map(figureCard).join('')}</div>`;
+      const returnTo = window.location.hash.replace(/^#/, '');
+      panel.innerHTML = `<div class="grid-movies">${list.map((figure) => figureCard(figure, returnTo)).join('')}</div>`;
     }
 
     function setTab(id, focus = false) {
@@ -155,28 +158,18 @@ export default {
     const search = root.querySelector('[name="q"]');
     scope.on(search, 'input', debounce(() => { st.q = search.value.trim(); sync(); draw(); }, 160));
 
-    ['period', 'sort'].forEach((n) => {
+    ['discipline', 'period', 'sort'].forEach((n) => {
       const el = root.querySelector(`[name="${n}"]`);
       scope.on(el, 'change', () => { st[n] = el.value; sync(); draw(); });
-    });
-
-    const chipsEl = root.querySelector('.genre-chips');
-    scope.on(chipsEl, 'click', (e) => {
-      const c = e.target.closest('[data-discipline]');
-      if (!c) return;
-      st.discipline = c.dataset.discipline;
-      chipsEl.querySelectorAll('[data-discipline]').forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
-      sync();
-      draw();
     });
 
     scope.on(panel, 'click', (e) => {
       if (!e.target.closest('[data-clear]')) return;
       Object.assign(st, { q: '', discipline: '', period: '', sort: 'popularidad' });
       search.value = '';
+      root.querySelector('[name="discipline"]').value = '';
       root.querySelector('[name="period"]').value = '';
       root.querySelector('[name="sort"]').value = 'popularidad';
-      chipsEl.querySelectorAll('[data-discipline]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.discipline === '')));
       sync();
       draw();
     });

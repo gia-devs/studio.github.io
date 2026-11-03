@@ -6,11 +6,12 @@ import { TYPE_LABELS, STATUS_LABELS, fmtYears } from '../data/figures.js';
 import { portrait } from './portrait.js';
 import { icon } from './icons.js';
 
-export function figureCard(f) {
+export function figureCard(f, returnTo = '') {
   const fav = isFavorite(f.id);
+  const href = `#/figura/${f.id}${returnTo ? `?return=${encodeURIComponent(returnTo)}` : ''}`;
   return `
     <article class="movie-card" data-figure="${f.id}">
-      <a class="movie-card__link" href="#/figura/${f.id}" aria-label="${esc(f.name)}. ${esc(TYPE_LABELS[f.type])}. ${esc(f.disciplines.join(', '))}">
+      <a class="movie-card__link" href="${esc(href)}" aria-label="${esc(f.name)}. ${esc(TYPE_LABELS[f.type])}. ${esc(f.disciplines.join(', '))}">
         <div class="movie-card__poster">
           ${portrait(f)}
           <span class="badge badge--rating">${TYPE_LABELS[f.type]}</span>
