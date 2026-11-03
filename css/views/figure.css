@@ -1,0 +1,51 @@
+.detail__hero {
+  position: relative;
+  display: grid;
+  gap: var(--s5);
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--card-background);
+}
+.detail__poster {
+  width: min(58vw, 240px);
+  aspect-ratio: 2 / 3;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+}
+.detail__info { display: flex; flex-direction: column; gap: var(--s3); align-items: flex-start; }
+.detail__info h1 { font-size: clamp(2rem, 5.5vw, 3.4rem); letter-spacing: -0.02em; }
+.detail__tag { font-size: 1.0625rem; opacity: 0.92; }
+.detail__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; color: var(--text-2); font-size: 0.9375rem; }
+.detail__score { display: inline-flex; align-items: center; gap: 4px; color: var(--text); }
+.detail__synopsis { max-width: 62ch; color: var(--text-2); }
+.detail__quote {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--accent);
+  background: var(--card-background);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.detail__quote p { margin: 0; font-style: italic; color: var(--text); }
+.detail__secondary { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.fav-toggle[aria-pressed="true"] { border-color: var(--accent-line); color: var(--text); }
+.fav-toggle[aria-pressed="true"] svg path { fill: currentColor; }
+
+.facts { display: grid; gap: 0; margin: 0; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--card-background); }
+.facts > div { display: grid; gap: 4px; padding: var(--s4) var(--s5); background: transparent; border-bottom: 1px solid var(--line); }
+.facts > div:last-child { border-bottom: 0; }
+.facts dt { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+.facts dd { margin: 0; }
+
+.grid-movies--4 { grid-template-columns: repeat(2, 1fr); }
+
+@media (min-width: 760px) {
+  .detail__hero { grid-template-columns: 240px 1fr; gap: var(--s7); padding: var(--s7); align-items: center; }
+  .detail__poster { width: 100%; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .facts > div { border-right: 1px solid var(--line); }
+  .grid-movies--4 { grid-template-columns: repeat(4, 1fr); }
+}

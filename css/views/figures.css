@@ -1,0 +1,26 @@
+.toolbar {
+  display: grid;
+  gap: var(--s3);
+  margin: var(--s5) 0 var(--s4);
+}
+.toolbar__search { position: relative; display: block; }
+.toolbar__search > .icon {
+  position: absolute;
+  left: 16px; top: 15px;
+  color: var(--text-3);
+  pointer-events: none;
+}
+.toolbar__search .input { padding-left: 46px; }
+.toolbar__sel { min-width: 0; }
+
+@media (min-width: 760px) {
+  .toolbar { grid-template-columns: 1fr 180px 190px; align-items: end; }
+}
+
+.genre-chips { margin-bottom: var(--s4); }
+.results-count { margin-bottom: var(--s4); color: var(--text-3); font-size: 0.875rem; }
+.skeleton-card { display: block; }
+
+/* Las selecciones destacadas conservan el mismo tamaño de ficha que el catálogo. */
+.featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s4); }
+@media (min-width: 640px) { .featured-grid { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: var(--s6) var(--s5); } }

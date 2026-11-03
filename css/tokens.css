@@ -1,0 +1,72 @@
+/* ==========================================================
+   G’IA · Tokens de diseño
+   Blanco y negro puro, estilo Grok / X.
+   ========================================================== */
+:root {
+  /* Superficies */
+  --bg: #000000;
+  --surface-1: #0a0a0a;
+  --surface-2: #111111;
+  --surface-3: #1a1a1a;
+  --surface-4: #242424;
+  --card-background: radial-gradient(80% 120% at 100% 0%, var(--accent-soft), transparent 72%), var(--surface-1);
+
+  /* Líneas */
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  /* Texto */
+  --text: #f4f4f5;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+
+  /* Acento: blanco (sin color) */
+  --accent: #ffffff;
+  --accent-strong: #ffffff;
+  --accent-ink: #000000;
+  --accent-soft: rgba(255, 255, 255, 0.08);
+  --accent-line: rgba(255, 255, 255, 0.28);
+
+  /* Estados */
+  --ok: #e4e4e7;
+  --warn: #d4d4d8;
+  --danger: #fafafa;
+
+  /* Tipografía */
+  --font-display: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Radios */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  /* Espaciado */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 72px;
+
+  /* Sombras */
+  --shadow-1: 0 10px 32px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 12px 44px rgba(255, 255, 255, 0.06);
+
+  /* Capas */
+  --z-sticky: 40;
+  --z-nav: 60;
+  --z-modal: 100;
+  --z-toast: 120;
+
+  /* Medidas de la app */
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 76px;
+  --topbar-h: 64px;
+  --bottombar-h: 64px;
+
+  --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+}
