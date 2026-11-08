@@ -1,9 +1,15 @@
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.home = GIA.views.home || {};
 // Home: figura destacada y accesos a las secciones.
 
-import { esc, createScope, prefersReducedMotion } from '../core/utils.js';
-import { FIGURES, TYPE_LABELS, fmtYears } from '../data/figures.js';
-import { portrait } from '../components/portrait.js';
-import { icon } from '../components/icons.js';
+const { esc, createScope, prefersReducedMotion } = GIA.core.utils;
+const { FIGURES, TYPE_LABELS, fmtYears, getFigure } = GIA.data.figures;
+const { store } = GIA.core.store;
+const { figureCard } = GIA.components.figureCard;
+const { emptyState } = GIA.components.states;
+const { portrait } = GIA.components.portrait;
+const { icon } = GIA.components.icons;
 
 const FEATURED_IDS = ['socrates', 'nietzsche', 'simone-de-beauvoir', 'leonardo', 'frida-kahlo', 'virginia-woolf'];
 const featured = () => FEATURED_IDS.map((id) => FIGURES.find((f) => f.id === id)).filter(Boolean);
@@ -68,7 +74,28 @@ function unitCards() {
         <p>Obras, miradas y lenguajes que transformaron la cultura.</p>
         <span class="unit-card__more">Explorar artistas ${icon('arrowRight', { size: 19 })}</span>
       </a>
+      <a class="unit-card" href="#/escritores">
+        <span class="unit-card__icon">${icon('quote', { size: 26 })}</span>
+        <span class="eyebrow">Literatura</span>
+        <h2>Escritores</h2>
+        <p>Novelas, poemas y obras que nos ayudan a mirar el mundo desde otras voces.</p>
+        <span class="unit-card__more">Explorar escritores ${icon('arrowRight', { size: 19 })}</span>
+      </a>
     </section>`;
+}
+
+function favoritesSection() {
+  const favorites = store.get().favorites.map(getFigure).filter(Boolean);
+  return `<section class="section home-favorites" aria-labelledby="favorites-title">
+    <div class="section-head"><div><p class="eyebrow">Tu biblioteca</p><h2 id="favorites-title">Tus favoritos</h2></div></div>
+    ${favorites.length ? `<div class="grid-movies">${favorites.map((figure) => figureCard(figure, '/home')).join('')}</div>` : emptyState({
+      title: 'Aún no tienes favoritos',
+      text: 'Guarda figuras con el corazón y las encontrarás aquí.',
+      icon: 'heart',
+      action: { label: 'Explorar filósofos', href: '#/filosofos' },
+      action2: { label: 'Explorar escritores', href: '#/escritores', variant: 'secondary' },
+    })}
+  </section>`;
 }
 
 function ad() {
@@ -80,7 +107,7 @@ function ad() {
   </section>`;
 }
 
-export default {
+GIA.views.home = {
   title: 'Home',
 
   render() {
@@ -88,6 +115,7 @@ export default {
       <div class="page home">
         ${hero()}
         ${unitCards()}
+        <div data-home-favorites>${favoritesSection()}</div>
         ${ad()}
       </div>`;
   },
@@ -95,6 +123,7 @@ export default {
   mount(root) {
     const scope = createScope();
     const list = featured();
+    scope.on(document, 'favchange', () => { const region = root.querySelector('[data-home-favorites]'); if (region) region.innerHTML = favoritesSection(); });
     const heroEl = root.querySelector('.hero');
     const slides = [...root.querySelectorAll('.hero__slide')];
     const dots = [...root.querySelectorAll('.hero__dot')];
@@ -169,3 +198,6 @@ export default {
     return () => scope.cleanup();
   },
 };
+
+
+})(window.GIA = window.GIA || {});

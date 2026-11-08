@@ -1,8 +1,11 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.portrait = GIA.components.portrait || {};
 // Retratos: imagen o degradado con iniciales / nombre.
 
-import { esc } from '../core/utils.js';
+const { esc } = GIA.core.utils;
 
-export function portrait(figure) {
+function portrait(figure) {
   if (figure.portrait) {
     return `<img class="poster" src="${esc(figure.portrait)}" alt="Retrato de ${esc(figure.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">`;
   }
@@ -13,3 +16,7 @@ export function portrait(figure) {
     <span class="portrait-fallback__name">${esc(figure.name)}</span>
   </div>`;
 }
+
+
+Object.assign(GIA.components.portrait, { portrait });
+})(window.GIA = window.GIA || {});

@@ -1,6 +1,9 @@
-// Router por hash. Cada ruta carga su vista con import() dinámico.
+(function (GIA) {
+GIA.core = GIA.core || {};
+GIA.core.router = GIA.core.router || {};
+// Router por hash con vistas registradas en GIA.
 
-import { errorState } from '../components/states.js';
+const { errorState } = GIA.components.states;
 
 const routes = [];
 const listeners = new Set();
@@ -8,7 +11,7 @@ let cleanup = null;
 let token = 0;
 let current = { path: '/home', query: {} };
 
-export function route(pattern, loader) {
+function route(pattern, loader) {
   const keys = [];
   const source = pattern.replace(/:[^/]+/g, (m) => {
     keys.push(m.slice(1));
@@ -17,16 +20,16 @@ export function route(pattern, loader) {
   routes.push({ re: new RegExp('^' + source + '/?$'), keys, loader });
 }
 
-export function parseHash() {
+function parseHash() {
   const raw = location.hash.replace(/^#/, '') || '/home';
   const [path, qs = ''] = raw.split('?');
   return { path: path || '/home', query: Object.fromEntries(new URLSearchParams(qs)) };
 }
 
-export const getCurrent = () => current;
-export const onRoute = (fn) => { listeners.add(fn); return () => listeners.delete(fn); };
+const getCurrent = () => current;
+const onRoute = (fn) => { listeners.add(fn); return () => listeners.delete(fn); };
 
-export function navigate(path, { replace = false } = {}) {
+function navigate(path, { replace = false } = {}) {
   const hash = '#' + path;
   if (location.hash === hash) { resolve(); return; }
   if (replace) {
@@ -37,14 +40,14 @@ export function navigate(path, { replace = false } = {}) {
   }
 }
 
-export function setQuery(params) {
+function setQuery(params) {
   const { path } = parseHash();
   const qs = new URLSearchParams(params).toString();
   history.replaceState(null, '', '#' + path + (qs ? '?' + qs : ''));
   current = { path, query: Object.fromEntries(new URLSearchParams(qs)) };
 }
 
-export const refresh = () => resolve();
+const refresh = () => resolve();
 
 function match(path) {
   for (const r of routes) {
@@ -74,7 +77,7 @@ async function resolve() {
       params = found.params;
       mod = (await found.r.loader()).default;
     } else {
-      mod = (await import('../views/notfound.js')).default;
+      mod = GIA.views.notfound;
     }
   } catch (err) {
     console.error(err);
@@ -123,10 +126,14 @@ async function resolve() {
   listeners.forEach((fn) => fn(current));
 }
 
-export function startRouter() {
+function startRouter() {
   window.addEventListener('hashchange', resolve);
   document.getElementById('view').addEventListener('click', (e) => {
     if (e.target.closest('[data-retry]')) resolve();
   });
   resolve();
 }
+
+
+Object.assign(GIA.core.router, { getCurrent, onRoute, refresh, route, parseHash, navigate, setQuery, startRouter });
+})(window.GIA = window.GIA || {});

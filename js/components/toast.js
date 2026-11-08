@@ -1,11 +1,14 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.toast = GIA.components.toast || {};
 // Avisos breves (toasts).
 
-import { esc } from '../core/utils.js';
-import { icon } from './icons.js';
+const { esc } = GIA.core.utils;
+const { icon } = GIA.components.icons;
 
 const ICONS = { info: 'info', success: 'check', error: 'alert' };
 
-export function toast(message, { type = 'info', duration = 2800 } = {}) {
+function toast(message, { type = 'info', duration = 2800 } = {}) {
   const host = document.getElementById('toasts');
   if (!host) return;
   while (host.children.length >= 3) host.firstElementChild.remove();
@@ -20,3 +23,7 @@ export function toast(message, { type = 'info', duration = 2800 } = {}) {
     setTimeout(() => el.remove(), 260);
   }, duration);
 }
+
+
+Object.assign(GIA.components.toast, { toast });
+})(window.GIA = window.GIA || {});

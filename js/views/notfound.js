@@ -1,6 +1,9 @@
-import { emptyState } from '../components/states.js';
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.notfound = GIA.views.notfound || {};
+const { emptyState } = GIA.components.states;
 
-export default {
+GIA.views.notfound = {
   title: 'Pantalla no encontrada',
   render() {
     return `<div class="page page--narrow">${emptyState({
@@ -8,7 +11,10 @@ export default {
       text: 'Puede que el enlace esté incompleto o que la página ya no esté disponible.',
       icon: 'search',
       action: { label: 'Ir a Home', href: '#/home' },
-      action2: { label: 'Explorar artistas', href: '#/artistas', variant: 'secondary' },
+      action2: { label: 'Explorar escritores', href: '#/escritores', variant: 'secondary' },
     })}</div>`;
   },
 };
+
+
+})(window.GIA = window.GIA || {});

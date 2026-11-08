@@ -87,24 +87,6 @@
 
 [data-slot] { display: inline-flex; flex: none; }
 
-.account-btn {
-  height: 42px;
-  min-width: 42px;
-  padding: 0 14px;
-  border-radius: var(--r-pill);
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-weight: 600;
-  font-size: 0.875rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--s2);
-  border: none;
-  cursor: pointer;
-}
-.account-btn:hover { background: #e4e4e7; }
-.account-btn__label { display: none; }
 
 #view {
   outline: none;
@@ -148,7 +130,6 @@
 
 @media (min-width: 640px) {
   .topbar__search { padding: 0 14px; }
-  .account-btn__label { display: inline; }
   #view { padding-left: var(--s5); padding-right: var(--s5); }
 }
 

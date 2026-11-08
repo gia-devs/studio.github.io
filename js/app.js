@@ -1,27 +1,23 @@
+(function (GIA) {
+
 // Punto de entrada: rutas, navegación y atajos.
 
-import { route, startRouter } from './core/router.js';
-import { store, toggleFavorite } from './core/store.js';
-import { initNav } from './components/nav.js';
-import { toast } from './components/toast.js';
-import { syncFavButtons } from './components/figureCard.js';
-import { openSearch } from './components/search.js';
-import { getFigure } from './data/figures.js';
+const { route, startRouter } = GIA.core.router;
+const { toggleFavorite } = GIA.core.store;
+const { initNav } = GIA.components.nav;
+const { toast } = GIA.components.toast;
+const { syncFavButtons } = GIA.components.figureCard;
+const { openSearch } = GIA.components.search;
+const { getFigure } = GIA.data.figures;
 
-route('/home', () => import('./views/home.js'));
-route('/inicio', () => import('./views/home.js')); // Alias para enlaces guardados con la ruta anterior.
-route('/filosofos', () => import('./views/figures.js'));
-route('/artistas', () => import('./views/figures.js'));
-route('/figura/:id', () => import('./views/figure.js'));
-route('/asistente', () => import('./views/asistente.js'));
-route('/comunidad', () => import('./views/asistente.js')); // Alias para enlaces guardados con la ruta anterior.
-route('/perfil', () => import('./views/account.js'));
-
-function applySettings() {
-  document.documentElement.classList.toggle('reduce-motion', !!store.get().settings.reduceMotion);
-}
-applySettings();
-store.subscribe(applySettings);
+route('/home', () => Promise.resolve({ default: GIA.views.home }));
+route('/inicio', () => Promise.resolve({ default: GIA.views.home })); // Alias para enlaces guardados con la ruta anterior.
+route('/filosofos', () => Promise.resolve({ default: GIA.views.figures }));
+route('/artistas', () => Promise.resolve({ default: GIA.views.figures }));
+route('/escritores', () => Promise.resolve({ default: GIA.views.figures }));
+route('/figura/:id', () => Promise.resolve({ default: GIA.views.figure }));
+route('/asistente', () => Promise.resolve({ default: GIA.views.asistente }));
+route('/comunidad', () => Promise.resolve({ default: GIA.views.asistente })); // Alias para enlaces guardados con la ruta anterior.
 
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-fav]');
@@ -47,3 +43,6 @@ document.addEventListener('keydown', (e) => {
 
 initNav();
 startRouter();
+
+
+})(window.GIA = window.GIA || {});

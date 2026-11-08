@@ -1,15 +1,37 @@
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.figure = GIA.views.figure || {};
 // Ficha de una figura.
 
-import { esc, createScope } from '../core/utils.js';
-import { isFavorite } from '../core/store.js';
-import { getFigure, similarTo, TYPE_LABELS, STATUS_LABELS, fmtYears } from '../data/figures.js';
-import { portrait } from '../components/portrait.js';
-import { figureCard } from '../components/figureCard.js';
-import { icon } from '../components/icons.js';
-import { emptyState } from '../components/states.js';
-import { ratingPanel, mountRating } from '../components/rating.js';
+const { esc, createScope } = GIA.core.utils;
+const { isFavorite } = GIA.core.store;
+const { getFigure, similarTo, TYPE_LABELS, STATUS_LABELS, fmtYears } = GIA.data.figures;
+const { portrait } = GIA.components.portrait;
+const { figureCard } = GIA.components.figureCard;
+const { icon } = GIA.components.icons;
+const { emptyState } = GIA.components.states;
+const { ratingPanel, mountRating } = GIA.components.rating;
 
-export default {
+function poemStanzas(poem, count = Infinity) {
+  return poem.text.split(/\n\s*\n/).slice(0, count).map((stanza) =>
+    `<p>${stanza.split('\n').map(esc).join('<br>')}</p>`
+  ).join('');
+}
+
+function featuredPoemSection(poem, author) {
+  if (!poem?.text) return '';
+  return `<section class="section featured-poem" aria-labelledby="featured-poem-title">
+    <p class="eyebrow">Poema destacado · ${esc(author)}</p>
+    <h2 id="featured-poem-title">${esc(poem.title)}</h2>
+    <div class="featured-poem__excerpt">${poemStanzas(poem, 1)}</div>
+    <details class="featured-poem__full">
+      <summary>Leer el poema completo</summary>
+      <div class="featured-poem__text">${poemStanzas(poem)}</div>
+    </details>
+  </section>`;
+}
+
+GIA.views.figure = {
   title: ({ params }) => getFigure(params.id)?.name || 'Figura',
 
   render({ params, query }) {
@@ -24,11 +46,11 @@ export default {
     }
     const fav = isFavorite(f.id);
     const more = similarTo(f, 4);
-    const categoryPath = f.type === 'artista' ? '/artistas' : '/filosofos';
-    const returnTo = typeof query.return === 'string' && /^\/(artistas|filosofos)(?:\?|$)/.test(query.return)
+    const categoryPath = f.type === 'artista' ? '/artistas' : f.type === 'escritor' ? '/escritores' : '/filosofos';
+    const returnTo = typeof query.return === 'string' && /^\/(artistas|filosofos|escritores|home)(?:\?|$)/.test(query.return)
       ? query.return
       : categoryPath;
-    const returnLabel = f.type === 'artista' ? 'Artistas' : 'Filósofos';
+    const returnLabel = query.return === '/home' ? 'Home' : f.type === 'artista' ? 'Artistas' : f.type === 'escritor' ? 'Escritores' : 'Filósofos';
 
     return `
       <div class="page detail" style="--c1:${f.c1};--c2:${f.c2}">
@@ -57,6 +79,8 @@ export default {
           </div>
         </section>
 
+        ${featuredPoemSection(f.featuredPoem, f.name)}
+
         <section class="section detail__facts" aria-label="Ficha">
           <dl class="facts">
             <div><dt>Tipo</dt><dd>${TYPE_LABELS[f.type]}</dd></div>
@@ -83,6 +107,7 @@ export default {
     const f = getFigure(params.id);
     if (!f) return undefined;
     const scope = createScope();
+    if (GIA.aion && GIA.aion.memory) GIA.aion.memory.setFigure(f.id);
     const unmountRating = mountRating(root, f);
     scope.add(unmountRating);
 
@@ -95,3 +120,6 @@ export default {
     return () => scope.cleanup();
   },
 };
+
+
+})(window.GIA = window.GIA || {});

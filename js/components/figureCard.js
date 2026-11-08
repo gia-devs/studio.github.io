@@ -1,12 +1,15 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.figureCard = GIA.components.figureCard || {};
 // Tarjeta de figura: retrato, tipo, disciplinas y favorito.
 
-import { esc } from '../core/utils.js';
-import { isFavorite } from '../core/store.js';
-import { TYPE_LABELS, STATUS_LABELS, fmtYears } from '../data/figures.js';
-import { portrait } from './portrait.js';
-import { icon } from './icons.js';
+const { esc } = GIA.core.utils;
+const { isFavorite } = GIA.core.store;
+const { TYPE_LABELS, STATUS_LABELS, fmtYears } = GIA.data.figures;
+const { portrait } = GIA.components.portrait;
+const { icon } = GIA.components.icons;
 
-export function figureCard(f, returnTo = '') {
+function figureCard(f, returnTo = '') {
   const fav = isFavorite(f.id);
   const href = `#/figura/${f.id}${returnTo ? `?return=${encodeURIComponent(returnTo)}` : ''}`;
   return `
@@ -26,10 +29,14 @@ export function figureCard(f, returnTo = '') {
     </article>`;
 }
 
-export function syncFavButtons(root, id, on) {
+function syncFavButtons(root, id, on) {
   root.querySelectorAll(`[data-fav="${id}"]`).forEach((b) => {
     b.setAttribute('aria-pressed', String(on));
     const title = b.getAttribute('aria-label').split(': ').slice(1).join(': ');
     if (title) b.setAttribute('aria-label', `${on ? 'Quitar de favoritos' : 'Añadir a favoritos'}: ${title}`);
   });
 }
+
+
+Object.assign(GIA.components.figureCard, { figureCard, syncFavButtons });
+})(window.GIA = window.GIA || {});

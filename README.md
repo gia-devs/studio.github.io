@@ -1,32 +1,20 @@
 # G’IA — Plataforma de ideas, artistas y pensamiento
 
-**G’IA** es una plataforma de ideas, artistas y pensamiento. **Aion** es el espacio de conversación y el guardián cósmico de la creatividad y el conocimiento.
+**G’IA** es una plataforma de ideas, artistas, escritores y pensamiento. **Aion** es el espacio de conversación y el guardián cósmico de la creatividad y el conocimiento.
 
 ## Cómo abrirla
 
-Abre `index.html` con un servidor local (necesario por los módulos ES):
-
-```bash
-# Python
-python -m http.server 8080
-
-# Node
-npx serve .
-```
-
-Luego visita `http://localhost:8080`.
+Abre `index.html` directamente con doble clic. La app y Aion funcionan sin servidor, módulos ni conexión a internet. La instalación PWA requiere `localhost` o HTTPS.
 
 ## Qué incluye
 
-- Catálogo de 40 figuras: 20 filósofos y 20 artistas, entre ellos Sócrates, Descartes, Van Gogh, Picasso, Frida Kahlo y Leonardo da Vinci.
+- Catálogo de 61 figuras: 20 filósofos, 20 artistas y 21 escritores, entre ellos Sócrates, Descartes, Van Gogh, Picasso, Cervantes, Shakespeare, Virginia Woolf y Álvaro de Campos.
 - Fichas con biografía, obras, influencias y cita
 - Favoritos, valoraciones (1–5 estrellas) y reseñas (guardados en localStorage)
-- Aion, espacio de conversación: responde desde el catálogo y consulta Wikipedia en español para preguntas externas, con enlace a la fuente
+- Aion, conversación local basada en el catálogo de G’IA; no consulta fuentes externas ni usa una API
 - Búsqueda global (atajo `/` en escritorio)
-- Perfil con acceso de maqueta
-- Favoritos, valoraciones y ajustes sincronizados entre pestañas del mismo navegador
-- Copia de seguridad JSON para exportar y restaurar la biblioteca local
-- Instalación como PWA y navegación básica sin conexión tras la primera carga
+- Favoritos y reseñas locales sincronizados entre pestañas del mismo navegador
+- Instalación como PWA y navegación offline tras cargar el sitio servido una vez
 - Diseño responsive (sidebar + bottom bar móvil)
 
 ## Estructura
@@ -40,15 +28,16 @@ gia-studio/
 │   ├── core/     # utils, store, router
 │   ├── components/
 │   ├── data/     # figures.js
-│   └── views/
+│   ├── views/
+│   └── aion/     # normalización, datos, intenciones, memoria, motor, UI y pruebas
 └── assets/
 ```
 
 Proyecto de portafolio. No hay backend ni pagos.
 
-## Estado de cuentas y datos
+## Datos locales
 
-El perfil sigue siendo local y de demostración: no crea una cuenta real ni sincroniza
-datos entre dispositivos. La copia JSON permite conservar o trasladar manualmente la
-biblioteca. La instalación PWA requiere servir el sitio por HTTPS (o `localhost`);
+Aion es un motor de reglas y solo conoce lo que aparece en las fichas; las ideas, ejemplos, preguntas, curiosidades e importancia de cada obra aún necesitan datos editoriales. Prueba el motor en la consola del navegador con `GIA.Aion.test()`.
+
+Los favoritos, las valoraciones y las reseñas se guardan localmente en este navegador; no hay cuentas ni registro. La instalación PWA requiere servir el sitio por HTTPS (o `localhost`);
 la primera carga debe completarse con conexión para guardar los archivos de la app.

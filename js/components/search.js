@@ -1,15 +1,18 @@
-// Búsqueda global: filósofos y artistas.
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.search = GIA.components.search || {};
+// Búsqueda global: filósofos, artistas y escritores.
 
-import { esc, debounce } from '../core/utils.js';
-import { FIGURES, topFigures, TYPE_LABELS, STATUS_LABELS } from '../data/figures.js';
-import { openModal } from './modal.js';
-import { icon } from './icons.js';
+const { esc, debounce } = GIA.core.utils;
+const { FIGURES, topFigures, TYPE_LABELS, STATUS_LABELS } = GIA.data.figures;
+const { openModal } = GIA.components.modal;
+const { icon } = GIA.components.icons;
 
 const norm = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
 function figureItem(f) {
   return `<li><a class="search-item" href="#/figura/${f.id}" data-close>
-    <span class="search-item__ico">${icon(f.type === 'filosofo' ? 'book' : 'palette', { size: 18 })}</span>
+    <span class="search-item__ico">${icon(f.type === 'filosofo' ? 'book' : f.type === 'escritor' ? 'quote' : 'palette', { size: 18 })}</span>
     <span class="search-item__txt"><strong>${esc(f.name)}</strong><small>${esc(TYPE_LABELS[f.type])} · ${esc(f.disciplines.join(' · '))}</small></span>
   </a></li>`;
 }
@@ -29,7 +32,7 @@ function results(q) {
   return `<p class="search-label">Figuras</p><ul>${list.map(figureItem).join('')}</ul>`;
 }
 
-export function openSearch() {
+function openSearch() {
   const api = openModal({
     title: 'Buscar',
     headless: true,
@@ -37,7 +40,7 @@ export function openSearch() {
     className: 'modal__panel--search',
     body: `
       <div class="search-box">${icon('search', { size: 20 })}
-        <input class="search-input" type="search" placeholder="Nombre, corriente, disciplina…" autocomplete="off" aria-label="Buscar filósofos y artistas" data-autofocus>
+        <input class="search-input" type="search" placeholder="Nombre, corriente, disciplina…" autocomplete="off" aria-label="Buscar filósofos, artistas y escritores" data-autofocus>
       </div>
       <div class="search-results" aria-live="polite">${results('')}</div>`,
   });
@@ -59,3 +62,7 @@ export function openSearch() {
 
   return api;
 }
+
+
+Object.assign(GIA.components.search, { openSearch });
+})(window.GIA = window.GIA || {});

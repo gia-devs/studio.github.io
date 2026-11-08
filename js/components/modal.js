@@ -1,7 +1,10 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.modal = GIA.components.modal || {};
 // Modal accesible.
 
-import { esc } from '../core/utils.js';
-import { icon } from './icons.js';
+const { esc } = GIA.core.utils;
+const { icon } = GIA.components.icons;
 
 const stack = [];
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -10,7 +13,7 @@ function lockScroll() {
   document.body.style.overflow = stack.length ? 'hidden' : '';
 }
 
-export function openModal({ title = '', body = '', actions = [], size = 'md', headless = false, className = '', onClose } = {}) {
+function openModal({ title = '', body = '', actions = [], size = 'md', headless = false, className = '', onClose } = {}) {
   const root = document.getElementById('modal-root');
   const previous = document.activeElement;
   const uid = 'm' + Math.random().toString(36).slice(2, 8);
@@ -77,9 +80,9 @@ export function openModal({ title = '', body = '', actions = [], size = 'md', he
   return api;
 }
 
-export const closeAllModals = () => [...stack].forEach((m) => m.close());
+const closeAllModals = () => [...stack].forEach((m) => m.close());
 
-export function confirmDialog({ title, text = '', confirmLabel = 'Confirmar', cancelLabel = 'Cancelar', danger = false }) {
+function confirmDialog({ title, text = '', confirmLabel = 'Confirmar', cancelLabel = 'Cancelar', danger = false }) {
   return new Promise((resolve) => {
     let answered = false;
     const done = (v) => { if (!answered) { answered = true; resolve(v); } };
@@ -94,3 +97,7 @@ export function confirmDialog({ title, text = '', confirmLabel = 'Confirmar', ca
     });
   });
 }
+
+
+Object.assign(GIA.components.modal, { closeAllModals, openModal, confirmDialog });
+})(window.GIA = window.GIA || {});

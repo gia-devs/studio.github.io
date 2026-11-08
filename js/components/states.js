@@ -1,7 +1,10 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.states = GIA.components.states || {};
 // Estados vacíos, de error y de carga.
 
-import { icon } from './icons.js';
-import { esc, range } from '../core/utils.js';
+const { icon } = GIA.components.icons;
+const { esc, range } = GIA.core.utils;
 
 function actionHtml(a) {
   if (!a) return '';
@@ -10,7 +13,7 @@ function actionHtml(a) {
   return `<button class="${cls}" type="button" ${a.attrs || ''}>${esc(a.label)}</button>`;
 }
 
-export function emptyState({ title, text = '', icon: ic = 'sparkle', action = null, action2 = null }) {
+function emptyState({ title, text = '', icon: ic = 'sparkle', action = null, action2 = null }) {
   return `
     <div class="empty-state">
       <span class="empty-state__icon">${icon(ic, { size: 30 })}</span>
@@ -20,7 +23,7 @@ export function emptyState({ title, text = '', icon: ic = 'sparkle', action = nu
     </div>`;
 }
 
-export function errorState({ title = 'Algo salió mal', text = '', retry = false, action = null }) {
+function errorState({ title = 'Algo salió mal', text = '', retry = false, action = null }) {
   return `
     <div class="empty-state empty-state--error" role="alert">
       <span class="empty-state__icon">${icon('alert', { size: 30 })}</span>
@@ -33,7 +36,11 @@ export function errorState({ title = 'Algo salió mal', text = '', retry = false
     </div>`;
 }
 
-export function skeletonGrid(n = 8) {
+function skeletonGrid(n = 8) {
   return `<div class="grid-figures" aria-hidden="true">${range(n).map(() => `
     <div class="skeleton-card"><div class="skeleton skeleton--poster"></div><div class="skeleton skeleton--line"></div><div class="skeleton skeleton--line skeleton--short"></div></div>`).join('')}</div>`;
 }
+
+
+Object.assign(GIA.components.states, { emptyState, errorState, skeletonGrid });
+})(window.GIA = window.GIA || {});

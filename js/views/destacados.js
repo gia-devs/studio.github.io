@@ -1,9 +1,12 @@
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.destacados = GIA.views.destacados || {};
 // Destacados y contemporáneos.
 
-import { FIGURES } from '../data/figures.js';
-import { figureCard } from '../components/figureCard.js';
+const { FIGURES } = GIA.data.figures;
+const { figureCard } = GIA.components.figureCard;
 
-export default {
+GIA.views.destacados = {
   title: 'Destacados',
   render() {
     const destacados = FIGURES.filter((f) => f.status === 'destacado' || f.status === 'contemporaneo')
@@ -20,3 +23,6 @@ export default {
     </div>`;
   },
 };
+
+
+})(window.GIA = window.GIA || {});

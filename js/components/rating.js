@@ -1,10 +1,13 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.rating = GIA.components.rating || {};
 // Control de puntuación 1–5 estrellas.
 
-import { store } from '../core/store.js';
-import { createScope, esc } from '../core/utils.js';
-import { toast } from './toast.js';
+const { store } = GIA.core.store;
+const { createScope, esc } = GIA.core.utils;
+const { toast } = GIA.components.toast;
 
-export function ratingPanel(figure) {
+function ratingPanel(figure) {
   const current = store.get().ratings[figure.id] || 0;
   return `<section class="rating-panel" aria-labelledby="rating-title" data-rating-panel="${esc(figure.id)}">
     <header class="rating-panel__head">
@@ -26,7 +29,7 @@ export function ratingPanel(figure) {
 `;
 }
 
-export function mountRating(root, figure) {
+function mountRating(root, figure) {
   const el = root.querySelector('[data-rating-panel]');
   if (!el) return () => {};
   const scope = createScope();
@@ -67,7 +70,6 @@ export function mountRating(root, figure) {
           figureId: figure.id,
           stars: value,
           text,
-          name: s.user?.name || 'Lector/a',
           date: new Intl.DateTimeFormat('es', { dateStyle: 'medium' }).format(new Date()),
         });
       }
@@ -80,3 +82,7 @@ export function mountRating(root, figure) {
 
   return () => scope.cleanup();
 }
+
+
+Object.assign(GIA.components.rating, { ratingPanel, mountRating });
+})(window.GIA = window.GIA || {});

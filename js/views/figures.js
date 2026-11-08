@@ -1,16 +1,20 @@
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.figures = GIA.views.figures || {};
 // Catálogo de figuras: filtros por tipo, disciplina y periodo.
 
-import { esc, createScope, debounce, plural } from '../core/utils.js';
-import { FIGURES, TYPE_LABELS } from '../data/figures.js';
-import { setQuery } from '../core/router.js';
-import { figureCard } from '../components/figureCard.js';
-import { emptyState, skeletonGrid } from '../components/states.js';
-import { icon } from '../components/icons.js';
+const { esc, createScope, debounce, plural } = GIA.core.utils;
+const { FIGURES, TYPE_LABELS } = GIA.data.figures;
+const { setQuery } = GIA.core.router;
+const { figureCard } = GIA.components.figureCard;
+const { emptyState, skeletonGrid } = GIA.components.states;
+const { icon } = GIA.components.icons;
 
 const TABS = [
   { id: 'todos', label: 'Todos' },
   { id: 'filosofo', label: 'Filósofos' },
   { id: 'artista', label: 'Artistas' },
+  { id: 'escritor', label: 'Escritores' },
 ];
 
 const SORTS = [
@@ -36,14 +40,14 @@ function applyFilters({ tab, q, discipline, period, sort }) {
   return list.sort(by);
 }
 
-export default {
-  title: ({ path }) => path === '/artistas' ? 'Artistas' : path === '/filosofos' ? 'Filósofos' : 'Figuras',
+GIA.views.figures = {
+  title: ({ path }) => path === '/artistas' ? 'Artistas' : path === '/filosofos' ? 'Filósofos' : path === '/escritores' ? 'Escritores' : 'Figuras',
 
   render({ query, path }) {
-    const fixedType = path === '/artistas' ? 'artista' : path === '/filosofos' ? 'filosofo' : null;
+    const fixedType = path === '/artistas' ? 'artista' : path === '/filosofos' ? 'filosofo' : path === '/escritores' ? 'escritor' : null;
     const tab = fixedType || (TABS.some((t) => t.id === query.type) ? query.type : (query.tab || 'todos'));
     const fixed = !!fixedType;
-    const pageTitle = fixedType === 'artista' ? 'Artistas' : fixedType === 'filosofo' ? 'Filósofos' : 'Filósofos y artistas';
+    const pageTitle = fixedType === 'artista' ? 'Artistas' : fixedType === 'filosofo' ? 'Filósofos' : fixedType === 'escritor' ? 'Escritores' : 'Filósofos, artistas y escritores';
     const categoryFigures = fixedType ? FIGURES.filter((f) => f.type === fixedType) : FIGURES;
     const categoryDisciplines = [...new Set(categoryFigures.flatMap((f) => f.disciplines))].sort((a, b) => a.localeCompare(b, 'es'));
     const categoryPeriods = [...new Set(categoryFigures.map((f) => f.period))].sort((a, b) => a.localeCompare(b, 'es'));
@@ -52,7 +56,7 @@ export default {
         <header class="page-head">
           <p class="eyebrow">Catálogo</p>
           <h1>${pageTitle}</h1>
-          <p>${fixedType === 'artista' ? 'Explora artistas, obras y movimientos que transformaron la cultura.' : fixedType === 'filosofo' ? 'Explora pensadores, ideas y tradiciones que transformaron nuestra forma de ver el mundo.' : 'Explora el pensamiento y la creación a través de las figuras que han marcado la historia.'}</p>
+          <p>${fixedType === 'artista' ? 'Explora artistas, obras y movimientos que transformaron la cultura.' : fixedType === 'filosofo' ? 'Explora pensadores, ideas y tradiciones que transformaron nuestra forma de ver el mundo.' : fixedType === 'escritor' ? 'Explora autores y obras que siguen dando forma a nuestra manera de contar el mundo.' : 'Explora el pensamiento y la creación a través de las figuras que han marcado la historia.'}</p>
         </header>
 
         <div class="tabs" role="tablist" aria-label="Tipo de figura" ${fixed ? 'hidden' : ''}>
@@ -96,7 +100,7 @@ export default {
   mount(root, { query, path }) {
     const scope = createScope();
     const st = {
-      tab: path === '/artistas' ? 'artista' : path === '/filosofos' ? 'filosofo' : (TABS.some((t) => t.id === query.type) ? query.type : (query.tab || 'todos')),
+      tab: path === '/artistas' ? 'artista' : path === '/filosofos' ? 'filosofo' : path === '/escritores' ? 'escritor' : (TABS.some((t) => t.id === query.type) ? query.type : (query.tab || 'todos')),
       q: query.q || '',
       discipline: query.discipline || '',
       period: query.period || '',
@@ -178,3 +182,6 @@ export default {
     return () => scope.cleanup();
   },
 };
+
+
+})(window.GIA = window.GIA || {});

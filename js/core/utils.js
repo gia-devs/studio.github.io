@@ -1,17 +1,20 @@
+(function (GIA) {
+GIA.core = GIA.core || {};
+GIA.core.utils = GIA.core.utils || {};
 // Utilidades compartidas: DOM, formato, fechas, aleatoriedad determinista.
 
-export const $ = (sel, root = document) => root.querySelector(sel);
-export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-export const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ESC[c]);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ESC[c]);
 
-export const round2 = (n) => Math.round(n * 100) / 100;
-export const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
-export const range = (n) => Array.from({ length: n }, (_, i) => i);
-export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const round2 = (n) => Math.round(n * 100) / 100;
+const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+const range = (n) => Array.from({ length: n }, (_, i) => i);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export const prefersReducedMotion = () =>
+const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
   document.documentElement.classList.contains('reduce-motion');
 
@@ -29,7 +32,7 @@ function xmur3(str) {
   };
 }
 
-export function seeded(seed) {
+function seeded(seed) {
   let a = xmur3(String(seed))();
   return function () {
     a |= 0;
@@ -42,22 +45,22 @@ export function seeded(seed) {
 
 /* ---------- Fechas ---------- */
 const pad2 = (n) => String(n).padStart(2, '0');
-export const isoDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const isoDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 
-export function fromIso(s) {
+function fromIso(s) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
   if (!m) return null;
   const d = new Date(+m[1], +m[2] - 1, +m[3]);
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
-export function today() {
+function today() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
   return d;
 }
 
-export function addDays(d, n) {
+function addDays(d, n) {
   const x = new Date(d);
   x.setDate(x.getDate() + n);
   x.setHours(0, 0, 0, 0);
@@ -65,19 +68,19 @@ export function addDays(d, n) {
 }
 
 const fmt = (d, opts) => new Intl.DateTimeFormat('es', opts).format(d);
-export const longDate = (d) => fmt(d, { weekday: 'long', day: 'numeric', month: 'long' });
-export const shortDate = (d) => fmt(d, { day: 'numeric', month: 'short' });
-export const weekdayShort = (d) => fmt(d, { weekday: 'short' }).replace('.', '');
-export const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const longDate = (d) => fmt(d, { weekday: 'long', day: 'numeric', month: 'long' });
+const shortDate = (d) => fmt(d, { day: 'numeric', month: 'short' });
+const weekdayShort = (d) => fmt(d, { weekday: 'short' }).replace('.', '');
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export const fmtYears = (from, to) => {
+const fmtYears = (from, to) => {
   if (!from) return '';
   if (!to) return `${from} –`;
   return `${from} – ${to}`;
 };
 
 /* ---------- Ciclo de vida de las vistas ---------- */
-export function createScope() {
+function createScope() {
   const cleanups = [];
   return {
     on(target, type, fn, opts) {
@@ -103,7 +106,7 @@ export function createScope() {
   };
 }
 
-export function debounce(fn, ms = 200) {
+function debounce(fn, ms = 200) {
   let t;
   return (...args) => {
     clearTimeout(t);
@@ -111,7 +114,7 @@ export function debounce(fn, ms = 200) {
   };
 }
 
-export async function copyText(text) {
+async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
     return true;
@@ -129,7 +132,7 @@ export async function copyText(text) {
   }
 }
 
-export const initials = (name) =>
+const initials = (name) =>
   String(name || '')
     .trim()
     .split(/\s+/)
@@ -137,4 +140,8 @@ export const initials = (name) =>
     .map((p) => p[0]?.toUpperCase() || '')
     .join('') || '·';
 
-export const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+
+Object.assign(GIA.core.utils, { $, $$, esc, round2, clamp, range, sleep, prefersReducedMotion, isoDate, longDate, shortDate, weekdayShort, cap, fmtYears, initials, plural, seeded, fromIso, today, addDays, createScope, debounce, copyText });
+})(window.GIA = window.GIA || {});

@@ -12,6 +12,16 @@
 }
 .toolbar__search .input { padding-left: 46px; }
 .toolbar__sel { min-width: 0; }
+@media (max-width: 759px) {
+  .toolbar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); margin: var(--s4) 0 var(--s3); }
+  .toolbar__search { grid-column: 1 / -1; }
+  .toolbar__sel .field__label { font-size: 0.72rem; white-space: nowrap; }
+  .toolbar__sel .select { width: 100%; min-width: 0; padding-left: 10px; padding-right: 24px; font-size: 0.84rem; }
+}
+@media (max-width: 370px) {
+  .toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .toolbar__sel:last-child { grid-column: 1 / -1; }
+}
 
 @media (min-width: 760px) {
   .toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }

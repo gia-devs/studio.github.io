@@ -1,3 +1,6 @@
+(function (GIA) {
+GIA.components = GIA.components || {};
+GIA.components.icons = GIA.components.icons || {};
 // Iconos SVG en línea (24x24, trazo).
 
 const P = {
@@ -32,8 +35,12 @@ const P = {
   quote: '<path d="M7 11c0-2 1.5-3.5 3.5-3.5S14 9 14 11v3c0 1.5-1 2.5-2.5 2.5S9 15.5 9 14"/><path d="M15 11c0-2 1.5-3.5 3.5-3.5S22 9 22 11v3c0 1.5-1 2.5-2.5 2.5S17 15.5 17 14"/>',
 };
 
-export function icon(name, { size = 20, cls = '', label = '' } = {}) {
+function icon(name, { size = 20, cls = '', label = '' } = {}) {
   const body = P[name] || P.info;
   const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
   return `<svg class="icon ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${a11y}>${body}</svg>`;
 }
+
+
+Object.assign(GIA.components.icons, { icon });
+})(window.GIA = window.GIA || {});

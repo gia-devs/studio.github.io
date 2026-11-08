@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>G’IA — Plataforma de ideas, artistas y pensamiento</title>
-  <meta name="description" content="G’IA es una plataforma para explorar ideas, artistas y pensamiento; conversa con Aion.">
+  <title>G’IA — Ideas, artistas, escritores y pensamiento</title>
+  <meta name="description" content="G’IA es una plataforma para explorar ideas, artistas, escritores y pensamiento; conversa con Aion.">
   <meta name="theme-color" content="#000000">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,9 +12,6 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
@@ -24,7 +21,6 @@
   <link rel="stylesheet" href="css/views/figures.css">
   <link rel="stylesheet" href="css/views/figure.css">
   <link rel="stylesheet" href="css/views/community.css">
-  <link rel="stylesheet" href="css/views/account.css">
 </head>
 <body>
   <a class="skip-link" href="#view">Saltar al contenido</a>
@@ -46,13 +42,12 @@
         <a class="topbar__brand" href="#/home" aria-label="G’IA, ir a Home">
           <span class="brand__word">G’IA</span>
         </a>
-        <button class="topbar__search" id="open-search" type="button" aria-label="Buscar filósofos y artistas">
+        <button class="topbar__search" id="open-search" type="button" aria-label="Buscar filósofos, artistas y escritores">
           <span data-slot="icon"></span>
-          <span class="topbar__search-text">Buscar filósofos y artistas</span>
+          <span class="topbar__search-text">Buscar filósofos, artistas y escritores</span>
           <kbd class="kbd">/</kbd>
         </button>
         <span class="topbar__spacer"></span>
-        <button class="account-btn" id="account-btn" type="button"></button>
       </header>
 
       <main id="view" tabindex="-1" aria-live="polite"></main>
@@ -68,7 +63,34 @@
     <p style="padding:24px;color:#fff;font-family:sans-serif">G’IA necesita JavaScript para funcionar.</p>
   </noscript>
 
-  <script type="module" src="js/app.js"></script>
+  <script defer src="js/core/utils.js"></script>
+  <script defer src="js/core/store.js"></script>
+  <script defer src="js/components/icons.js"></script>
+  <script defer src="js/data/figures.js"></script>
+  <script defer src="js/aion/normalize.js"></script>
+  <script defer src="js/aion/data.js"></script>
+  <script defer src="js/aion/intents.js"></script>
+  <script defer src="js/aion/templates.js"></script>
+  <script defer src="js/aion/memory.js"></script>
+  <script defer src="js/aion/engine.js"></script>
+  <script defer src="js/aion/tests.js"></script>
+  <script defer src="js/aion/ui.js"></script>
+  <script defer src="js/components/toast.js"></script>
+  <script defer src="js/components/states.js"></script>
+  <script defer src="js/components/modal.js"></script>
+  <script defer src="js/components/portrait.js"></script>
+  <script defer src="js/components/rating.js"></script>
+  <script defer src="js/components/figureCard.js"></script>
+  <script defer src="js/components/search.js"></script>
+  <script defer src="js/core/router.js"></script>
+  <script defer src="js/components/nav.js"></script>
+  <script defer src="js/views/home.js"></script>
+  <script defer src="js/views/figures.js"></script>
+  <script defer src="js/views/figure.js"></script>
+  <script defer src="js/views/destacados.js"></script>
+  <script defer src="js/views/asistente.js"></script>
+  <script defer src="js/views/notfound.js"></script>
+  <script defer src="js/app.js"></script>
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));

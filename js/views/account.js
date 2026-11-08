@@ -1,14 +1,17 @@
+(function (GIA) {
+GIA.views = GIA.views || {};
+GIA.views.account = GIA.views.account || {};
 // Perfil: favoritos, valoraciones, ajustes y acceso local.
 
-import { esc, createScope, initials } from '../core/utils.js';
-import { store } from '../core/store.js';
-import { navigate, setQuery } from '../core/router.js';
-import { getFigure } from '../data/figures.js';
-import { figureCard } from '../components/figureCard.js';
-import { emptyState } from '../components/states.js';
-import { icon } from '../components/icons.js';
-import { toast } from '../components/toast.js';
-import { confirmDialog } from '../components/modal.js';
+const { esc, createScope, initials } = GIA.core.utils;
+const { store } = GIA.core.store;
+const { navigate, setQuery } = GIA.core.router;
+const { getFigure } = GIA.data.figures;
+const { figureCard } = GIA.components.figureCard;
+const { emptyState } = GIA.components.states;
+const { icon } = GIA.components.icons;
+const { toast } = GIA.components.toast;
+const { confirmDialog } = GIA.components.modal;
 
 const TABS = [
   { id: 'favoritos', label: 'Favoritos' },
@@ -127,7 +130,7 @@ function accessPanel() {
 
 const PANELS = { favoritos: favoritesPanel, valoraciones: ratingsPanel, resenas: reviewsPanel, ajustes: settingsPanel, acceso: accessPanel };
 
-export default {
+GIA.views.account = {
   title: 'Perfil',
 
   render({ query }) {
@@ -253,3 +256,6 @@ export default {
     return () => scope.cleanup();
   },
 };
+
+
+})(window.GIA = window.GIA || {});

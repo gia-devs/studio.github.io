@@ -126,7 +126,7 @@
 
 /* Chat de Aion: el historial se desplaza dentro del panel y el compositor queda a la vista. */
 .assistant-page { display: flex; flex-direction: column; max-width: 980px; height: calc(100dvh - var(--topbar-h) - var(--s5) - var(--bottombar-h) - env(safe-area-inset-bottom) - var(--s2)); min-height: 0; }
-.assistant-panel { display: grid; grid-template-rows: minmax(0, 1fr) auto auto; flex: 1; min-height: 0; gap: var(--s4); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card-background); }
+.assistant-panel { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; flex: 1; min-height: 0; gap: var(--s4); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card-background); }
 .assistant-transcript { display: flex; flex-direction: column; gap: var(--s4); min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior: contain; padding: var(--s2); }
 .assistant-message { display: flex; align-items: flex-start; gap: var(--s3); max-width: 90%; }
 .assistant-message--user { align-self: flex-end; flex-direction: row-reverse; }
@@ -156,3 +156,7 @@
 }
 .assistant-message__body .assistant-source { margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line); color: var(--text-3); font-size: 0.82rem; }
 .assistant-send:disabled { opacity: 0.55; cursor: wait; }
+
+.assistant-panel > [data-aion-clear] { justify-self: end; }
+.assistant-suggestions, .assistant-links { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s3); }
+.assistant-suggestions .chip { cursor: pointer; }

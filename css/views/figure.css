@@ -49,3 +49,19 @@
   .facts > div { border-right: 1px solid var(--line); }
   .grid-movies--4 { grid-template-columns: repeat(4, 1fr); }
 }
+
+
+.featured-poem {
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--card-background);
+}
+.featured-poem h2 { margin: var(--s2) 0 var(--s4); font-size: clamp(1.5rem, 3vw, 2rem); }
+.featured-poem__excerpt, .featured-poem__text { max-width: 68ch; font-family: var(--font-display); line-height: 1.8; color: var(--text-2); }
+.featured-poem__excerpt { font-size: 1.05rem; color: var(--text); }
+.featured-poem__excerpt p, .featured-poem__text p { margin: 0 0 var(--s4); }
+.featured-poem__full { margin-top: var(--s4); border-top: 1px solid var(--line); padding-top: var(--s3); }
+.featured-poem__full summary { cursor: pointer; color: var(--text); font-weight: 600; }
+.featured-poem__text { padding-top: var(--s4); white-space: normal; }
+@media (min-width: 760px) { .featured-poem { padding: var(--s7); } }
