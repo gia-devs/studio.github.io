@@ -1,4 +1,4 @@
-const CACHE = 'gia-studio-v4';
+const CACHE = 'gia-studio-v9';
 const SHELL = [
   './', './index.html', './manifest.webmanifest', './assets/icons/favicon.svg',
   './css/tokens.css', './css/base.css', './css/layout.css', './css/components.css',

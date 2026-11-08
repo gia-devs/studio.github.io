@@ -1,7 +1,7 @@
-// Asistente de exploración: combina las fichas locales con búsquedas en Wikipedia en español.
+// Aion conversa primero desde el catálogo y amplía con Wikipedia cuando hace falta.
 
 import { createScope, esc } from '../core/utils.js';
-import { FIGURES, TYPE_LABELS, fmtYears } from '../data/figures.js';
+import { FIGURES, TYPE_LABELS, fmtYears, similarTo } from '../data/figures.js';
 import { icon } from '../components/icons.js';
 
 async function searchWikipedia(question) {
@@ -29,12 +29,54 @@ async function searchWikipedia(question) {
 
 const normalize = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-function findFigure(question) {
+function findFigures(question) {
   const q = normalize(question);
-  return FIGURES.find((f) => [f.name, f.id.replaceAll('-', ' '), ...f.works].some((term) => {
-    const n = normalize(term);
-    return n.length > 3 && q.includes(n);
-  }));
+  return FIGURES.filter((figure) => [figure.name, figure.id.replaceAll('-', ' '), ...figure.works]
+    .some((term) => {
+      const normalizedTerm = normalize(term);
+      return normalizedTerm.length > 3 && q.includes(normalizedTerm);
+    }));
+}
+
+function linkedName(figure) {
+  return `<a href="#/figura/${figure.id}">${esc(figure.name)}</a>`;
+}
+
+function catalogSource(figure) {
+  return `<p class="assistant-source">Desde el catálogo de G’IA · <a href="#/figura/${figure.id}">Abrir ficha</a></p>`;
+}
+
+function figureAnswer(figure, question) {
+  const q = normalize(question);
+  const asksWorks = /obra|pint|escrib|libro|creo|hizo|trabajo/.test(q);
+  const asksInfluence = /influ|inspir|relacion|parecid|conecto/.test(q);
+  let body;
+  if (asksWorks) {
+    body = `<p>${linkedName(figure)} creó, escribió o es conocida por obras como <strong>${esc(figure.works.slice(0, 4).join(' · '))}</strong>.</p><p>¿Hay alguna que te gustaría explorar con más detalle?</p>`;
+  } else if (asksInfluence) {
+    body = `<p>${linkedName(figure)} recibió influencias de <strong>${esc(figure.influences?.join(' · ') || 'distintas tradiciones de su época')}</strong> y su trabajo influyó en <strong>${esc(figure.influenced?.join(' · ') || 'generaciones posteriores')}</strong>.</p><p>¿Quieres que comparemos su trayectoria con otra figura?</p>`;
+  } else {
+    const years = fmtYears(figure.years);
+    body = `<p>${linkedName(figure)} es ${esc(TYPE_LABELS[figure.type].toLowerCase())}${years ? ` (${esc(years)})` : ''}. ${esc(figure.bio)}</p><p><strong>Para empezar:</strong> ${esc(figure.works.slice(0, 3).join(' · '))}.</p><p>¿Qué te interesa más: sus ideas, su vida o una obra concreta?</p>`;
+  }
+  return `${body}${catalogSource(figure)}`;
+}
+
+function comparisonAnswer(first, second) {
+  return `<p>${linkedName(first)} y ${linkedName(second)} coinciden en que ambos forman parte de la historia del pensamiento y la creación, pero se acercan a ella desde lugares distintos.</p><p><strong>${esc(first.name)}</strong>: ${esc(first.disciplines.slice(0, 2).join(' · '))}. ${esc(first.bio)}</p><p><strong>${esc(second.name)}</strong>: ${esc(second.disciplines.slice(0, 2).join(' · '))}. ${esc(second.bio)}</p><p>¿Quieres que compare sus ideas, sus obras o el contexto en que vivieron?</p>`;
+}
+
+function recommendationAnswer(question, lastFigure) {
+  const q = normalize(question);
+  const type = /artista|pintor|pintura|obra|escultor/.test(q) ? 'artista'
+    : /filosof|pensador|idea|etica/.test(q) ? 'filosofo' : null;
+  let picks = lastFigure && /parecid|similar|relacion|como esa|como este/.test(q)
+    ? similarTo(lastFigure, 3)
+    : [...FIGURES].filter((figure) => !type || figure.type === type)
+      .sort((a, b) => b.popularity - a.popularity).slice(0, 3);
+  if (type) picks = picks.filter((figure) => figure.type === type);
+  if (!picks.length) picks = [...FIGURES].sort((a, b) => b.popularity - a.popularity).slice(0, 3);
+  return `<p>¡Claro! Por lo que mencionas, podrías empezar por ${picks.map(linkedName).join(', ')}. Cada ficha tiene una breve introducción y obras para seguir explorando.</p><p>¿Cuál te llama más la atención?</p>`;
 }
 
 function message(role, html) {
@@ -45,12 +87,10 @@ export default {
   title: 'Aion',
   render() {
     return `<div class="page assistant-page">
-      <header class="page-head"><p class="eyebrow">Aion · El guardián cósmico de la creatividad y el conocimiento</p><h1>Aion</h1><p>El espacio donde conversas y exploras ideas, artistas y pensamiento.</p></header>
       <section class="assistant-panel" aria-label="Conversación con Aion">
-        <div class="assistant-transcript" data-transcript aria-live="polite">${message('assistant', '<p>Hola, soy Aion. Te acompaño a explorar las ideas y obras de G’IA.</p><p class="assistant-note">Aion consulta las fichas de la plataforma y, cuando hace falta más contexto, busca en Wikipedia en español y enlaza la fuente.</p>')}</div>
-        <div class="assistant-suggestions"><button type="button" data-prompt="¿Quién fue Frida Kahlo?">¿Quién fue Frida Kahlo?</button><button type="button" data-prompt="Háblame de Sócrates">Háblame de Sócrates</button><button type="button" data-prompt="¿Qué obras hizo Leonardo da Vinci?">Obras de Leonardo da Vinci</button></div>
-        <form class="assistant-form" data-form><label class="sr-only" for="assistant-input">Escribe tu pregunta</label><textarea id="assistant-input" name="question" rows="1" maxlength="500" placeholder="Pregunta sobre una figura…" required></textarea><button class="btn btn--primary assistant-send" type="submit" aria-label="Enviar pregunta">${icon('arrowRight', { size: 19 })}</button></form>
-        <p class="assistant-disclaimer">Si la pregunta no coincide con una figura del catálogo, su texto se envía a Wikipedia en español para buscar un artículo.</p>
+        <div class="assistant-transcript" data-transcript aria-live="polite">${message('assistant', '<p>Hola, soy Aion.</p>')}</div>
+        <form class="assistant-form" data-form><label class="sr-only" for="assistant-input">Escribe tu pregunta</label><textarea id="assistant-input" name="question" rows="1" maxlength="500" placeholder="Conversemos sobre una idea o figura…" required></textarea><button class="btn btn--primary assistant-send" type="submit" aria-label="Enviar pregunta">${icon('arrowRight', { size: 19 })}</button></form>
+        <p class="assistant-disclaimer">Tus preguntas sobre figuras se responden con el catálogo; Wikipedia aporta contexto cuando hace falta.</p>
       </section>
     </div>`;
   },
@@ -60,28 +100,52 @@ export default {
     const form = root.querySelector('[data-form]');
     const input = form.elements.question;
     const send = form.querySelector('button[type=submit]');
+    let lastFigure = null;
+
     async function ask(raw) {
       const q = raw.trim();
       if (!q) return;
       transcript.insertAdjacentHTML('beforeend', message('user', `<p>${esc(q)}</p>`));
       const pendingId = `assistant-pending-${Date.now()}`;
-      transcript.insertAdjacentHTML('beforeend', `<div id="${pendingId}">${message('assistant', '<p>Buscando…</p>')}</div>`);
+      transcript.insertAdjacentHTML('beforeend', `<div id="${pendingId}">${message('assistant', '<p>A ver qué podemos descubrir…</p>')}</div>`);
       send.disabled = true;
       input.value = '';
       transcript.scrollTop = transcript.scrollHeight;
       let answer;
       try {
-        const figure = findFigure(q);
-        if (figure) {
-          answer = `<p><strong><a href="#/figura/${figure.id}">${esc(figure.name)}</a></strong> es ${esc(TYPE_LABELS[figure.type].toLowerCase())} (${esc(fmtYears(figure.years))}). ${esc(figure.bio)}</p><p><strong>Obras:</strong> ${esc(figure.works.slice(0, 3).join(' · '))}</p><p class="assistant-source">Fuente: catálogo de G’IA · <a href="#/figura/${figure.id}">Abrir ficha</a></p>`;
+        const normalized = normalize(q);
+        const matches = findFigures(q);
+        const comparing = /compara|diferencia|parecid|tienen en comun|relaciona/.test(normalized);
+        const recommendation = /recomiend|sugier|que puedo explorar|por donde empiezo|quiero descubrir/.test(normalized);
+        const greeting = /^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|que tal)[!.?\s]*$/.test(normalized);
+        const thanks = /^(gracias|muchas gracias|genial gracias|perfecto gracias)[!.?\s]*$/.test(normalized);
+        const followUp = /^(y |que |quien |como |por que|porque|donde|cual|cuentame|hablame|mas |sus |su |ella|el |eso|esa|tambien|puedes )/.test(normalized);
+
+        if (greeting) {
+          answer = '<p>¡Hola! ¿Qué te gustaría explorar hoy?</p>';
+        } else if (thanks) {
+          answer = '<p>¡De nada! Me alegra acompañarte. ¿Seguimos con otra figura o quieres profundizar en esta idea?</p>';
+        } else if (comparing && matches.length >= 2) {
+          lastFigure = matches[1];
+          answer = comparisonAnswer(matches[0], matches[1]);
+        } else if (matches.length >= 2) {
+          answer = `<p>Veo que te interesan ${matches.slice(0, 2).map(linkedName).join(' y ')}. ¿Quieres que compare sus ideas o prefieres conocer a una primero?</p>`;
+          lastFigure = matches[0];
+        } else if (matches.length === 1) {
+          lastFigure = matches[0];
+          answer = figureAnswer(lastFigure, q);
+        } else if (lastFigure && followUp) {
+          answer = figureAnswer(lastFigure, q);
+        } else if (recommendation) {
+          answer = recommendationAnswer(q, lastFigure);
         } else {
           const result = await searchWikipedia(q);
           answer = result
-            ? `<p><strong>${esc(result.title)}.</strong> ${esc(result.extract)}</p><p class="assistant-source">Fuente: <a href="${esc(result.url)}" target="_blank" rel="noopener noreferrer">Wikipedia en español</a></p>`
-            : `<p>No encontré un artículo claro para esa pregunta. Prueba con un nombre o concepto más concreto.</p>`;
+            ? `<p>No encuentro esa pregunta directamente en el catálogo. Esto puede servir como punto de partida:</p><p><strong>${esc(result.title)}.</strong> ${esc(result.extract)}</p><p>¿Quieres conectarlo con alguna figura de G’IA?</p><p class="assistant-source">Fuente: <a href="${esc(result.url)}" target="_blank" rel="noopener noreferrer">Wikipedia en español</a></p>`
+            : `<p>No encontré una respuesta clara. Si me das un nombre, una obra o una idea concreta, seguimos desde ahí.</p>`;
         }
       } catch {
-        answer = '<p>No pude consultar Wikipedia en este momento. Revisa tu conexión e inténtalo de nuevo.</p>';
+        answer = '<p>No pude consultar una fuente externa ahora mismo. Aun así, podemos seguir explorando las fichas del catálogo.</p>';
       } finally {
         const pending = document.getElementById(pendingId);
         if (pending) pending.outerHTML = message('assistant', answer);
@@ -91,7 +155,6 @@ export default {
       }
     }
     scope.on(form, 'submit', (event) => { event.preventDefault(); ask(input.value); });
-    scope.on(root, 'click', (event) => { const b = event.target.closest('[data-prompt]'); if (b) ask(b.dataset.prompt); });
     return () => scope.cleanup();
   },
 };

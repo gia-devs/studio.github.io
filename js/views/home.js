@@ -8,54 +8,6 @@ import { icon } from '../components/icons.js';
 const FEATURED_IDS = ['socrates', 'nietzsche', 'simone-de-beauvoir', 'leonardo', 'frida-kahlo', 'virginia-woolf'];
 const featured = () => FEATURED_IDS.map((id) => FIGURES.find((f) => f.id === id)).filter(Boolean);
 
-const EXPLORATION_PATHS = [
-  {
-    id: 'identidad', title: 'Identidad', intro: 'Tres maneras de pensar cómo se forma la identidad y cómo encontramos una voz propia.',
-    steps: [
-      { id: 'simone-de-beauvoir', link: 'Analiza cómo la sociedad construye la identidad de las mujeres.' },
-      { id: 'frida-kahlo', link: 'Convierte el cuerpo y la experiencia personal en imagen.' },
-      { id: 'virginia-woolf', link: 'Reivindica el espacio y la libertad necesarios para escribir.' },
-    ],
-  },
-  {
-    id: 'etica', title: 'Ética', intro: 'Del diálogo sobre la virtud a la responsabilidad de pensar y actuar.',
-    steps: [
-      { id: 'socrates', link: 'Examina la justicia y la virtud haciendo preguntas.' },
-      { id: 'confucio', link: 'Relaciona la conducta recta con la virtud y las relaciones humanas.' },
-      { id: 'hannah-arendt', link: 'Explora la responsabilidad, el pensamiento y la acción política.' },
-    ],
-  },
-  {
-    id: 'mirar-el-mundo', title: 'Mirar el mundo', intro: 'Tres formas de preguntar qué vemos y cómo transformamos esa percepción.',
-    steps: [
-      { id: 'platon', link: 'Distingue el mundo sensible de las Ideas.' },
-      { id: 'leonardo', link: 'Une la observación, el arte y la investigación de la naturaleza.' },
-      { id: 'yayoi-kusama', link: 'Explora la percepción, la repetición y el infinito.' },
-    ],
-  },
-];
-
-function renderPath(path) {
-  const figures = path.steps.map((step) => ({ ...step, figure: FIGURES.find((f) => f.id === step.id) })).filter((step) => step.figure);
-  return `<p class="exploration__intro">${esc(path.intro)}</p><div class="theme-stops">${figures.map(({ figure, link }, i) => `
-    <a class="theme-stop" href="#/figura/${figure.id}">
-      <span class="theme-stop__number">0${i + 1}</span>
-      <span class="eyebrow">${esc(TYPE_LABELS[figure.type])}</span>
-      <h3>${esc(figure.name)}</h3>
-      <p>${esc(link)}</p>
-      <span class="theme-stop__link">Ver ficha ${icon('arrowRight', { size: 17 })}</span>
-    </a>`).join('')}</div>`;
-}
-
-function explorationPath() {
-  const first = EXPLORATION_PATHS[0];
-  return `<section class="exploration" aria-labelledby="exploration-title">
-    <div class="section-head"><div><p class="eyebrow">Recorridos breves</p><h2 id="exploration-title">Sigue una idea</h2></div></div>
-    <div class="exploration__tabs" data-theme-tabs role="group" aria-label="Elegir tema">${EXPLORATION_PATHS.map((path, i) => `<button class="exploration__tab" type="button" data-theme="${path.id}" aria-pressed="${i === 0}">${esc(path.title)}</button>`).join('')}</div>
-    <div data-theme-results aria-live="polite">${renderPath(first)}</div>
-  </section>`;
-}
-
 function slide(f, i) {
   return `
     <article class="hero__slide ${i === 0 ? 'is-active' : ''}" data-slide="${i}" role="group" aria-roledescription="diapositiva"
@@ -136,7 +88,6 @@ export default {
       <div class="page home">
         ${hero()}
         ${unitCards()}
-        ${explorationPath()}
         ${ad()}
       </div>`;
   },
@@ -214,17 +165,6 @@ export default {
     syncPauseBtn();
     restart();
     scope.add(stop);
-
-    const themeTabs = root.querySelector('[data-theme-tabs]');
-    const themeResults = root.querySelector('[data-theme-results]');
-    scope.on(themeTabs, 'click', (event) => {
-      const button = event.target.closest('[data-theme]');
-      if (!button) return;
-      const path = EXPLORATION_PATHS.find((item) => item.id === button.dataset.theme);
-      if (!path) return;
-      themeTabs.querySelectorAll('[data-theme]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-      themeResults.innerHTML = renderPath(path);
-    });
 
     return () => scope.cleanup();
   },
